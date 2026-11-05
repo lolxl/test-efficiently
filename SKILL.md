@@ -26,10 +26,9 @@ covered by [MIT](LICENSE); that license does not cover other repository content.
   Scale verification to affected behavior and risk, rather than test count.
 - **Clocks, child processes, shared mutable fixtures, caches, refusal or cleanup
   guards:** read the relevant [test-design controls](references/test-design.md#controls-for-risky-boundaries)
-  even for a single test. If changing runner discovery, placement, concurrency or
-  making a speed claim, also use the suite procedure below. Read the quality
-  contract with that procedure when the work speeds the suite up or measures it.
-  Test count alone does not determine risk.
+  even for a single test. Read the quality contract and the suite procedure
+  when that change speeds the suite up or measures it. Test count alone does
+  not determine risk.
 - **Test-cost investigation or suite-speed improvement:** read the
   [final checklist](references/quality-contract.md) and follow the numbered
   [suite-optimization procedure](references/suite-optimization.md). It produces

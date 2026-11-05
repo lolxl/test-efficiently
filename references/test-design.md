@@ -19,8 +19,9 @@ isolation care as shared clock patches; prefer a seam owned by the behavior.
 For example, a pure parser regression can be one input/expected-output row and
 its focused test command. If it changes a clock binding, launches a child, shares
 mutable state, caches preparation or checks a refusal/cleanup guard, continue to
-the relevant controls below even if only one test changes. Runner/discovery,
-sharding or concurrency changes also need the [suite procedure](suite-optimization.md).
+the relevant controls below even if only one test changes. Runner, discovery,
+sharding, or concurrency changes read the [suite procedure](suite-optimization.md)
+when they speed the suite up or measure it.
 
 ## Investigate intermittent failures
 
