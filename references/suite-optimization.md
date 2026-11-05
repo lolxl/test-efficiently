@@ -1,88 +1,125 @@
 # Optimize an existing suite
 
-Read the [quality contract](quality-contract.md). The useful objective is a
-shorter reliable feedback loop, including the time spent validating the change.
+Use this preferred sequence for cost/performance work. Adapt the outputs to
+existing runner reports and project notes; a table or a few task-response lines
+may suffice. It does not require a new report format or test framework. For a
+small isolated test edit, start with [test design](test-design.md#short-path-for-an-isolated-change).
 
-## Establish a comparable baseline
+## 1. Define the question and baseline boundary
 
-Use the real runner in an isolated checkout. Capture the pinned content and
-dirty state, command/options, runtime and CPU budget, competing tests/builds,
-normal environment protections, terminal status, and the full stage boundary.
-Record cache and thermal conditions when they matter; label them uncontrolled
-when they were not measured.
+**Input:** The requested time budget, correctness requirements and real runner.
 
-Inventory executable entry points and stable case IDs. Include shell aggregators,
-standalone leaf tests, public/portable copies, tooling, implicit skips and fixture
-outcomes. A wrapper and a leaf with similar names may change environment, setup,
-selection or error behavior.
+**Output:** A baseline record naming content/dirty state, command/options,
+runtime, CPU/resource budget, worker geometry (counts, overlap and nested pools),
+terminal status and what elapsed time includes. Distinguish targeted, portable-copy,
+tooling and complete-run scopes.
+Use an isolated checkout. Include normal environment protections and competing
+work; record cache/thermal conditions when relevant or label them uncontrolled.
+On a shared host, use the existing coordination mechanism for probes and builds
+as well as the main run. Verify actual activity and ownership: old directories
+or editing-only processes alone do not prove an active build.
 
-Use existing machine-readable runner reports where available. Case time,
-fixture events, worker elapsed time and unallocated time answer different
-questions. Do not silently assign all unallocated time to fixtures.
+**Decision:** If the baseline is missing or incomparable, collect the smallest
+measurement needed before selecting a speed change. Respect authorized run limits.
 
-## Find the binding cost
+## 2. Inventory what actually executes
 
-Separate build/setup, required subprocess work, polling/waits, assertions and
-cleanup. Rank wall-clock critical paths as well as cumulative CPU/process time.
-For overlapping stages, adding all stage durations overstates wall time.
+**Input:** Runner discovery, entry-point definitions and available reports.
 
-Choose one bounded opportunity and state why it is worth the engineering and
-validation cost. Examples include removing a proved duplicate launch, reducing
-redundant fixture preparation, or avoiding repeated parsing on a measured hot
-path. A large source file, a visible cache miss, or an attractive percentage of
-a tiny subgroup is not sufficient evidence.
+**Output:** An entry/case map covering shell aggregators, standalone leaves,
+portable copies, tooling, stable case IDs, implicit skips and fixture outcomes.
+For example, record `wrapper -> leaf IDs; setup/environment; pass/skip/fail`.
+A wrapper and similarly named leaf may differ in selection or error behavior.
+Separate case time, fixture events, worker elapsed and unallocated time; do not
+assign all unallocated time to fixtures.
 
-Useful stop decisions include: a negligible measured share, mixed paired
-results, a change that alters the data path, or fixture costs that the model
-cannot represent. Record the rejected idea rather than enlarging the patch
-until some number improves.
+**Decision:** If an entry or population cannot be accounted for, resolve that gap
+before deduplicating, moving or excluding it. Matching totals alone are insufficient.
 
-## Preserve execution semantics
+## 3. Select one binding cost and a falsifiable experiment
 
-Deduplication needs an entry-point/behavior matrix: selection, inputs,
-environment, fixtures, failures/skips and standalone behavior. Prove the chosen
-entry reaches the leaves; a filename exclusion can silently lose future tests.
+**Input:** The inventory and measured costs for build/setup, subprocesses,
+polling/waits, assertions and cleanup.
 
-For preparation caches, measure the preparation separately. Key reusable input
-by its real content and configuration, and preserve per-case mutable isolation.
-Keep independent negative controls for stale, changed and foreign input.
+**Output:** One bounded proposal with expected benefit, engineering/validation
+cost and an observation that would reject it. Rank the wall-clock critical path
+as well as cumulative CPU/process time; overlapping stage durations cannot simply
+be added. Example: remove one duplicate launch only if the entry map proves the
+same behavior still runs freshly through the remaining path.
 
-For timing weights or sharding, account for class/module fixture re-entry and
-ordering. Case-only costs may exclude the most expensive setup. Changing
-placement can create new setup or destroy affinity, even with identical IDs.
-Retain conservative fallback behavior for unmeasured or uncertain modules.
+**Decision:** Stop or choose another opportunity if the measured share is
+negligible, paired results are mixed, the proposal changes the data path, or the
+model cannot represent relevant fixture costs.
+File size, a visible cache miss or a large percentage of a tiny subgroup is not
+enough. Record a rejected idea without expanding the patch to chase a number.
 
-For concurrency, enumerate shared writers and nested pools, define the CPU/resource
-budget, and keep the normal outer admission and isolation. Two six-worker stages
-that overlap need twelve declared slots; a later four-worker stage need not
-overlap them. More slots do not split an indivisible slow test. Cancellation must
-retain ownership through the last child and cleanup, not merely until the parent
-process returns.
+## 4. Apply the controls for the mechanism being changed
 
-## Validate the proposed explanation
+**Input:** The selected proposal and its execution/lifecycle assumptions.
 
-Run the smallest changed behavior first, with relevant negative controls. Then
-exercise the affected scope and any alternate execution context. Reconcile
-intentionally added/retired cases and changed skips explicitly. Freeze the
-candidate for the required complete run.
+**Output:** The bounded change and relevant controls from this list; use only
+those that apply, plus [test-design controls](test-design.md#controls-for-risky-boundaries)
+for clocks, subprocess boundaries or guard sensitivity.
 
-Use interleaved paired measurements when claiming a causal local improvement.
-State the number of pairs, distributions and measured boundary. When only one
-complete run is authorized, report it as one observation; do not invent a causal
-claim or silently repeat it until it passes a target.
+- **Duplicate launches:** Compare selection, inputs, environment, fixtures,
+  failures/skips and standalone behavior. Prove the retained entry reaches the
+  leaves; a filename exclusion can silently lose future tests.
+- **Preparation/cache:** Measure preparation separately. Key immutable reusable
+  input by real content/configuration; preserve each case's mutable state and
+  reset contract. Use independent controls for stale, changed and foreign input.
+- **Weights/shards:** Account for class/module fixture re-entry and ordering.
+  Case-only cost can omit expensive setup; moving identical IDs can create setup
+  or destroy fixture affinity. Retain conservative fallback for uncertain modules.
+- **Concurrency/ownership:** Enumerate shared writers and nested pools; define
+  resource limits and keep the existing outer admission and isolation active.
+  Two overlapping six-worker stages require twelve declared slots; a later
+  four-worker stage need not overlap them. Slots cannot split an indivisible test.
+  Keep ownership through the last child and cleanup. Check owned processes are
+  gone before fixture teardown, which could otherwise hide failed cancellation.
 
-Inspect the complete report and terminal code independently of a console summary:
-population identity, observed results, fixture/subtest accounting, fresh entry
-execution, required stages, guard observations and reaping. Resolve schema
-assumptions against an actual producer report rather than writing a permissive
-reader around invented telemetry.
+**Decision:** If equivalence, invalidation, isolation or ownership cannot be
+shown, narrow or reject the change before a costly complete run.
 
-Report correctness and performance separately. A fully green run above the target
-is a successful correctness validation and a missed performance target. Use its
-new critical path to select the next experiment instead of rerunning unchanged
-content without a reason.
+## 5. Validate locally, then measure the frozen candidate
 
-## Release an anonymous benchmark safely
+**Input:** The changed behavior, its negative controls and authorized run budget.
+
+**Output:** Focused results, affected caller/alternate-context results and the
+required complete report bound to unchanged candidate content. Reconcile added
+or retired IDs and changed skips. Check terminal code independently of the
+console summary: case identities/outcomes, fixture/subtest accounting, fresh
+entry execution, required stages, guard observations and reaping. Resolve schema
+assumptions against an actual producer report; do not write a permissive reader
+around invented telemetry.
+
+A causal local improvement claim requires comparable paired measurements:
+use interleaved baseline/candidate runs and report the number of pairs,
+distributions, measured boundary and relevant controlled conditions. Without
+comparable paired evidence, report observations or a hypothesis instead of a
+causal improvement. If only one complete run is authorized, keep it as n=1;
+do not silently repeat it to meet a target.
+
+**Decision:** A failed/interrupted run is evidence to investigate and retain.
+If the complete run passes but exceeds the target, correctness passed and the
+performance target was missed. Select further work from its measured critical
+path; an unchanged retry needs a named reason.
+If local paired results are mixed, return to step 3 or stop and record the
+rejected proposal; do not select only favorable samples.
+
+## 6. Report the result at the supported scope
+
+**Input:** The retained baseline, candidate reports, costs and limitations.
+
+**Output:** Separate behavior, population and timing conclusions; measured
+scope/sample size, validation cost and the next justified action. Apply the
+[final checklist](quality-contract.md) once before reporting.
+
+**Decision:** Accept the supported claim or state the remaining gap. An arithmetic
+partition or average-load bound needs fixture lifecycle, setup, contention,
+serial work and cleanup before it can become a credible forecast. Seek margin
+for the actual requirement instead of treating a barely favorable estimate as a pass.
+
+## If releasing an anonymous benchmark
 
 Permission to release measurements does not make their originating repository
 or identity public. Verify actual visibility; authenticated access is not proof

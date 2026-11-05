@@ -1,44 +1,62 @@
 ---
 name: test-efficiently
-description: Design useful tests, repair costly fixtures, and speed up existing suites while preserving behavior and trustworthy evidence. Use when writing tests, investigating test cost or flakiness, or planning a suite-speed improvement; ordinary edits without a testing question do not need this workflow.
+description: Write or repair useful tests, diagnose flakiness and costly fixtures, and speed up suites without weakening behavior or evidence. Use the short path for isolated test edits and relevant controls for risky boundaries or performance work; ordinary edits without a testing question do not need this skill.
 license: MIT
 ---
 
 # Test Efficiently
 
-This standalone skill folder, including its sanitized data, is covered by
-[its MIT license](LICENSE). It does not relicense other repository content.
-
 Improve the time to a trustworthy answer, including implementation, diagnosis,
 review and validation cost. A shorter command is useful only when it answers
-the same relevant question.
+the same relevant question. This standalone folder and its sanitized data are
+covered by [MIT](LICENSE); that license does not cover other repository content.
 
-Read [the quality contract](references/quality-contract.md), then choose the
-path that matches the request:
+## Choose the path by risk and cost
 
-- **Write or repair tests:** [test design](references/test-design.md). Choose the
-  cheapest layer that can observe the defect, preserve an appropriate real
-  boundary check, and make fixtures sensitive to the failure they claim to catch.
-- **Optimize an existing codebase:** [suite optimization](references/suite-optimization.md).
-  Inventory and measure before changing setup, discovery, weights or concurrency.
-- **Assess evidence or explain the method:** [an anonymized case study](references/case-study.md)
-  and its [sanitized measurements](data/benchmark-runs.json). These are examples,
-  not performance expectations for another repository.
+- **Intermittent or load-sensitive failure:** start with
+  [flakiness diagnosis](references/test-design.md#investigate-intermittent-failures).
+  Preserve the failed run and investigate its context before choosing a repair;
+  a passing quiet replay does not establish a cause.
+- **Small, isolated test addition or repair with a known behavior to check:**
+  start directly with the [short test-design path](references/test-design.md#short-path-for-an-isolated-change).
+  A pure input/output assertion usually needs no suite inventory or benchmark.
+- **General test writing across several behaviors:** apply the short path to
+  each behavior and use the [layer-selection table](references/test-design.md#choose-the-observation-before-the-machinery).
+  Scale verification to affected behavior and risk, rather than test count.
+- **Clocks, child processes, shared mutable fixtures, caches, refusal or cleanup
+  guards:** read the relevant [test-design controls](references/test-design.md#controls-for-risky-boundaries)
+  even for a single test. If changing runner discovery, placement, concurrency or
+  making a speed claim, also use the suite procedure below. Test count alone does
+  not determine risk.
+- **Test-cost investigation or suite-speed improvement:** follow the numbered
+  [suite-optimization procedure](references/suite-optimization.md). It produces
+  an inventory, a bounded experiment and evidence appropriate to the claim.
+- **Assess or explain benchmark evidence:** use the
+  [anonymous case study](references/case-study.md) and
+  [sanitized measurements](data/benchmark-runs.json). These are examples, not
+  performance expectations for another repository. When preparing measurements
+  for publication, also use the [anonymous-release guard](references/suite-optimization.md#if-releasing-an-anonymous-benchmark).
 
-Start from the user's actual time and correctness constraints. Record the
-behavior at risk, the proposed test scope, the expensive boundary, and the
-observation that would disprove the proposed improvement. Use existing project
-runners, timing exports, inventory checks and mutation facilities where they
-exist; adapt to their formats rather than building a second test framework.
+Use existing project runners, reports and note formats. A design note can live
+in the task response or an existing work log; do not create a framework or new
+file for every small change. Start from the user's actual time/correctness
+constraints and the observation that would disprove the proposed improvement.
 
-Keep three questions separate:
+## Terms used in the references and data
 
-1. Did the behavior remain correct, including refusal and cleanup paths?
-2. Did the intended population actually run with the expected outcome semantics?
-3. What elapsed-time claim does this experiment support?
+- **Source context** runs in a normal source checkout. **Public/portable-copy
+  context** runs in an exported or copied tree that may lack Git history or
+  ignored files. The JSON key `public` names this execution context; it does
+  **not** mean that the originating repository is publicly visible.
+- **Outer admission** is the project's existing permission/resource check before
+  launching work, such as reserving CPU slots or refusing service starts. Keep
+  it active; this skill does not require a particular scheduler or guard tool.
+- **Entry** is an executable suite/tooling launch; a **case ID** identifies a test.
+  A **cohort** is the case population for one candidate. Anonymous labels retain
+  these distinctions without revealing original names.
 
-Finish with the implemented change, the behavioral and population evidence,
-the measured scope and sample size, total validation cost, and remaining limits.
-Keep failed and interrupted attempts visible. Follow the project's existing
-authorization, isolation and release rules; this skill grants no extra execution
-or publication permission.
+Before reporting completion, use the compact [final checklist](references/quality-contract.md).
+Report correctness, population coverage and timing as separate conclusions,
+with sample size, total validation cost and remaining limits. Keep failed and
+interrupted attempts visible. Follow the project's authorization, isolation and
+release rules; this skill grants no extra execution or publication permission.
