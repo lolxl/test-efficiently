@@ -1,10 +1,45 @@
 # Write tests that earn their runtime
 
-Read the [quality contract](quality-contract.md) first. This guide concerns the
-choice and construction of tests, not a replacement for a repository's required
-verification or release gates.
+## Short path for an isolated change
 
-## Choose the observation before the machinery
+1. Name the wrong behavior and the smallest assertion that distinguishes it
+   from correct behavior. Use the cheapest existing test layer that observes it.
+2. Add or repair the test with only the mutable state it needs. For a regression,
+   check the relevant bad version fails for the intended reason when feasible.
+3. Run the named test and affected callers required by the project. Report the
+   behavior checked and result; use the [final checklist](quality-contract.md)
+   before reporting. No benchmark is needed unless making a speed claim.
+
+For any mock, preserve the unrelated runtime mechanisms the test still needs.
+Global patches of process helpers, environment or random state need the same
+isolation care as shared clock patches; prefer a seam owned by the behavior.
+
+For example, a pure parser regression can be one input/expected-output row and
+its focused test command. If it changes a clock binding, launches a child, shares
+mutable state, caches preparation or checks a refusal/cleanup guard, continue to
+the relevant controls below even if only one test changes. Runner/discovery,
+sharding or concurrency changes also need the [suite procedure](suite-optimization.md).
+
+## Investigate intermittent failures
+
+Keep the failed run's report, terminal status, content/command, execution context
+and observed load; do not replace it with a later pass. Reproduce the original
+context/load within the authorized resource budget, or state which conditions
+could not be recreated. Form a specific hypothesis and use a control that can
+distinguish it from alternatives before claiming a cause. A quiet replay passing
+neither erases the failure nor proves load caused it. Follow the relevant clock,
+fixture, process or guard controls below once the affected boundary is identified.
+An isolated flaky test does not require a full-suite inventory unless runner
+selection, population or suite interaction is part of the uncertainty.
+On a shared host, use the project's coordination/admission mechanism for probes,
+load replays and builds too; verify actual activity and ownership before starting.
+
+## Controls for risky boundaries
+
+Read only the sections relevant to the boundary being changed. These controls
+supplement the short path and the project's required verification gates.
+
+### Choose the observation before the machinery
 
 Name a concrete wrong behavior and the smallest observation that distinguishes
 it from the correct behavior. Then choose the layer:
@@ -20,17 +55,22 @@ it from the correct behavior. Then choose the layer:
 A policy table and a boundary test complement each other. Move rows to a cheaper
 layer only after mapping what the real invocation previously covered. Include
 different configuration sources, fallback behavior and process/lock/signal paths
-when those affect the contract.
+when those affect the contract. A mock must leave unrelated runtime mechanisms
+needed by the test intact. For a refusal guard, check that valid work still
+runs, the named forbidden action is refused, and disabling that guard makes the
+relevant test fail. An unrelated earlier refusal cannot prove guard sensitivity.
 
 For a new test, a useful short design note is: behavior; relevant bad version;
 observation; chosen layer; required mutable isolation; expected expensive work.
 It need not become a new repository template or approval door.
 
-## Remove repeated preparation without sharing live state
+### Remove repeated preparation without sharing live state
 
 Separate immutable source, templates and Git objects from mutable HOME, config,
 queues, locks, history and outputs. Reusing the former may be cheap and safe;
-sharing the latter needs a specific lifecycle contract.
+sharing the latter needs a specific lifecycle contract. If caching preparation,
+use the invalidation controls in [suite step 4](suite-optimization.md#4-apply-the-controls-for-the-mechanism-being-changed)
+without loading the whole optimization procedure for an isolated fixture repair.
 
 In a matrix test, identify which reset restores independence and which setup is
 redundant. Preserve every row and assertion. Break the reset and confirm the
@@ -42,7 +82,7 @@ one author's ignored working files creates costly failures in copied trees and
 CI. Likewise, a copied test tree may intentionally lack the original Git history;
 a fixture that shells out to an unavailable base commit is not a portable oracle.
 
-## Control time at the correct seam
+### Control time at the correct seam
 
 Patch the clock binding owned by the behavior under test, or supply a clock
 through an existing fixture seam. Patching `time.sleep` on the shared standard
@@ -60,10 +100,10 @@ Keep a real-clock check where real elapsed behavior is the requirement. Increasi
 a timeout, dropping a timing assertion, or skipping a case needs its own changed
 requirement; it is not a fixture diagnosis.
 
-## Spend verification where it changes the decision
+### Spend verification where it changes the decision
 
 Start with the named behavior and its failing control. Exercise affected callers,
-copied/public contexts and generated inventory or implementation-map checks when
+portable-copy contexts and generated inventory or implementation-map checks when
 the change can affect them. Use the project's required complete run after the
 candidate stabilizes, rather than consuming it as the first debugging command.
 

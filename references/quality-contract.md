@@ -1,70 +1,36 @@
-# Quality contract
+# Final quality checklist
 
-Boundary: the reusable contract for this skill. Project-specific runners and
-verification requirements remain authoritative; the case study owns historical
-facts, not additional universal rules.
+Use once before reporting, at the scope relevant to the change. Project runners
+and required verification/release gates remain authoritative; the case study
+supplies historical evidence, not additional universal rules.
 
-## Preserve the question being tested
+- **Behavior:** For a speed-only change, retain assertions, input coverage,
+  failure/skip semantics and isolation, including refusal and cleanup paths. If
+  deliberately retiring or consolidating tests, map removed cases/entries to preserved behavior and failure controls or
+  an explicitly retired requirement; report the inventory delta. Fewer IDs alone
+  establish neither equivalence nor a speedup.
+- **Sensitivity:** Where a regression or guard is at risk, show the valid path
+  passing and a relevant bad version failing for the intended reason. An earlier
+  unrelated refusal, malformed fixture, missing import or no-op mutation is not
+  that control. Do not manufacture mutations for editorial changes.
+- **Execution:** Bind evidence to content, command, runtime, population and
+  environment. For every speed-only change, including fixture, cache and runner
+  changes, compare stable case identities and skip/outcome results across the
+  affected population, not just totals or `OK`; separate fixture failures and
+  subtest-only cases. Record omissions and expected skips. Cached verdicts do not prove fresh
+  execution.
+- **Boundary and status:** Name the measured scope. Complete timings include
+  normal build/setup, required stages, reaping and cleanup. Capture terminal
+  status; an interrupted job has no completed result. A successful replay does
+  not erase a failure or establish its cause. A target is not a stop deadline.
+- **Claim:** Separate observations, estimates and hypotheses; state sample size.
+  Logical clocks do not measure real latency, local wins do not establish a suite
+  win, cross-version runs are not paired causal experiments, and n=1 establishes
+  no percentile or repeatability. Arithmetic bounds are not execution forecasts.
+- **Cost and next action:** Report verification cost and unresolved uncertainty.
+  Repeat or broaden only for changed content, new evidence, a named unresolved
+  concern or project policy, within the user's run limits. Keep a frozen candidate
+  for the required complete run; do not search silently for a favorable sample.
 
-For a speed-only change, preserve behavior, assertions, input coverage, outcome
-semantics and isolation. Compare stable case identities and failure/skip results,
-not only a total or the last `OK` line. A matching count can hide replacement
-cases; an unchanged list can hide newly skipped cases.
-
-Deliberate retirement or consolidation is a separate correctness decision. Map
-the removed cases and entry points to preserved behavior and failure controls,
-or to an explicitly retired requirement. Report the inventory delta. Fewer test
-IDs alone prove neither equivalence nor a speedup.
-
-Reuse immutable fixture input when appropriate; give each case its own mutable
-state and reset the state that can affect the next case. Cache source data or
-content-addressed preparation only with a demonstrated invalidation and isolation
-contract. Cached verdicts do not establish fresh execution.
-
-## Make a failure observable
-
-A regression or safety test needs a relevant failing control. First make the
-valid path pass; then reintroduce the defect or disable the specific guard and
-observe the named test fail for the intended reason. Missing imports, malformed
-fixtures, an earlier unrelated refusal, and a no-op mutation are not that evidence.
-Use this where it changes confidence, rather than manufacturing mutations for
-every editorial edit.
-
-Keep policy decisions, state transitions, real subprocess behavior and
-wall-clock latency distinct. A logical clock can prove a polling/state contract;
-it does not measure real latency. A mock must leave the unrelated runtime
-mechanisms needed by the test intact.
-
-## Measure the run that actually happened
-
-Bind evidence to content, command, runtime, input population and relevant
-environment. Distinguish targeted, public/portable, tooling and complete runs.
-Record omissions and expected skips. Track fixture failures and subtest-only
-cases separately when the framework does so.
-
-For a complete timing claim, include normal build/setup, required stages,
-process reaping and cleanup. Record worker geometry and competing work. On a
-shared host, use the existing resource coordination mechanism for test probes
-and builds as well as the main runner. Static old directories and editing-only
-processes are not proof of an active build; verify actual activity and ownership.
-
-Record terminal status from the real job. An interrupted job has no completed
-result. A quiet successful replay does not erase an earlier failure or prove its
-cause. A target time is distinct from an operational stop deadline.
-
-## Bound the claim
-
-Label observations, estimates and hypotheses. State sample size and scope.
-An isolated improvement does not establish an end-to-end improvement; a
-cross-version green run is not a paired causal experiment. A one-run success
-does not establish a percentile, a stable service level or repeatability.
-
-An arithmetic partition or average-load bound is a sizing aid. Account for
-fixture lifecycle, setup, contention, serial work and cleanup before treating
-it as an execution forecast. Seek enough margin for the claim that matters.
-
-Choose further verification to resolve a named uncertainty. Freeze the candidate
-for the required complete run, and broaden or repeat only when changed content,
-new evidence, an unresolved concern, or project policy justifies it. Respect the
-user's existing limits on costly runs; do not turn an unfavorable sample into an
-unannounced search for a favorable one.
+Boundary-specific mechanisms live in [test design](test-design.md#controls-for-risky-boundaries)
+and the [suite procedure](suite-optimization.md), rather than being repeated here.

@@ -35,6 +35,38 @@
       "provenance": "Owner-supplied aggregate from private experiment records; raw pairs not released."
     }
   ],
+  "earlier_reported_inventory_evidence": [
+    {
+      "scope": "historical tooling entry and wrapper/leaf inventory pilot",
+      "evidence_type": "reported_historical_aggregates_not_released_raw_observations",
+      "samples": null,
+      "statistic_type": null,
+      "entry_elapsed_seconds": 1345.083,
+      "inventory_entries_before": 53,
+      "inventory_entries_after": 45,
+      "reported_paired_subgroup_saving_seconds_range": [56, 57],
+      "reported_range_precision": "Approximate narrative range, not measured integer bounds or a confidence interval.",
+      "pairs": null,
+      "raw_samples_released": false,
+      "whole_suite_speedup_claim": false,
+      "provenance": "Reported historical aggregates; sample counts unknown and raw records not released. This inventory predates the later 48-entry runs."
+    }
+  ],
+  "evidence_disclosures": {
+    "historical_inventory": "The earlier_reported_inventory_evidence block re-encodes the existing case-study narrative, not independent corroboration. Original sample counts and the statistic type behind 1345.083 seconds are unavailable in the public material; null does not mean no samples existed. Raw observations and the reason for the historical 45-to-later-48 inventory difference are not supplied.",
+    "narrative_only_earlier_figures": "The case-study figures 115.41 minutes, roughly 0.339%, the withdrawn roughly 182-second estimate, and 3399.379 seconds have no corresponding released structured measurements or raw records. They remain reported historical narrative with its stated observation/estimate distinctions.",
+    "retained_case_skip_claim": {
+      "reported_contexts": [
+        "source",
+        "public"
+      ],
+      "provenance": "The author reports that the original retained-ID audit confirmed no new skips among the earlier 9005 IDs in both contexts. The public aggregates do not include the per-ID mapping and cannot independently reproduce that audit."
+    },
+    "public_added_case_skip_inference": {
+      "minimum_added_ids_with_case_level_skip": 3,
+      "basis": "Public case-level skip totals rose from 79 to 82. Conditional on the author-reported absence of new retained-ID skips, at least three added IDs are skipped. Added-ID identities and any retained skip-to-pass transitions are not supplied."
+    }
+  },
   "runs": [
     {
       "id": "before_fixture_repair_tooling2",
