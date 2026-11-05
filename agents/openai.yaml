@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Efficiently"
+  short_description: "Design useful tests and speed up existing suites"
+  default_prompt: "Use $test-efficiently to improve test feedback time while preserving behavior, isolation, and trustworthy measurements."

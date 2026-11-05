@@ -1,0 +1,1088 @@
+{
+  "schema_version": 1,
+  "boundary": "Owner-authorized, anonymized aggregate test-efficiency evidence from an unpublished codebase. No originating repository, issue, revision, internal entry names, private paths, account/session/process identifiers, raw traces, configurations or source code are included. Opaque cohort labels summarize private inventory checks; these aggregates alone cannot independently reproduce those checks.",
+  "project": "anonymous-process-suite",
+  "claim_limits": [
+    "One complete observation per late configuration; no stable latency or percentile claim.",
+    "The configurations differ in fixtures, new cases and tooling concurrency; no paired whole-suite causal speedup claim.",
+    "Runtime/package versions are retained; cache and thermal conditions were not controlled.",
+    "Case time excludes class/module fixtures; unallocated time is not claimed to be fixture cost alone.",
+    "Pass plus case-level skip can be less than observed cases because some cases report only subtests.",
+    "Candidate, cohort, failed-case and tooling-entry labels are anonymous. Original source and raw records are not supplied, so this is a case study rather than an independently reproducible code benchmark."
+  ],
+  "earlier_reported_subset_evidence": [
+    {
+      "scope": "four matrix tests,192 cells per run",
+      "evidence_type": "reported_interleaved_paired_subset_measurement",
+      "pairs": 3,
+      "runs": 6,
+      "workers": 1,
+      "baseline_median_seconds": 104.244,
+      "candidate_median_seconds": 50.687,
+      "median_paired_reduction_percent": 51.47,
+      "raw_pairs_in_this_file": false,
+      "whole_suite_speedup_claim": false,
+      "provenance": "Owner-supplied aggregate from private experiment records; raw pairs not released."
+    },
+    {
+      "scope": "field CLI reads,304 reads per measurement",
+      "evidence_type": "reported_paired_microbenchmark",
+      "pairs": 7,
+      "median_paired_reduction_percent": 25.4,
+      "all_pairs_improved": true,
+      "raw_pairs_in_this_file": false,
+      "whole_suite_speedup_claim": false,
+      "provenance": "Owner-supplied aggregate from private experiment records; raw pairs not released."
+    }
+  ],
+  "runs": [
+    {
+      "id": "before_fixture_repair_tooling2",
+      "samples": 1,
+      "evidence_type": "observed_complete_execution",
+      "comparison_kind": "cross_version_not_a_paired_causal_experiment",
+      "content_clean": true,
+      "runtime": {
+        "architecture": "arm64",
+        "os": "Darwin",
+        "python": "3.9.6"
+      },
+      "environment": {
+        "logical_cpus": 12,
+        "start_load_averages": [
+          0.67724609375,
+          0.90283203125,
+          1.22119140625
+        ],
+        "other_host_tests_probes_large_builds": "held",
+        "foreign_editing_worker": "paused with zero CPU; retained memory",
+        "cache_state": "not controlled as a paired experiment",
+        "thermal_state": "not measured"
+      },
+      "geometry": {
+        "first_phase": {
+          "source_workers": 6,
+          "public_workers": 6,
+          "overlap": true
+        },
+        "second_phase": {
+          "tooling_workers": 2,
+          "after_both_first_phase_stages_reaped": true
+        },
+        "declared_cpu_slots": 12,
+        "normal_build": true,
+        "normal_outer_admission": true,
+        "cleanup_mode": "anchored-session"
+      },
+      "functional_pass": false,
+      "runner_rc": 1,
+      "wrapper_rc": 1,
+      "report_status": "ok",
+      "target_seconds": 1800,
+      "target_met": false,
+      "elapsed_seconds": {
+        "process_wall": 2038.356652334,
+        "wrapper_including_final_checks": 2038.3829861250001,
+        "report": 2038.123927667,
+        "conservative_complete": 2038.3829861250001
+      },
+      "stages_seconds": {
+        "portability": 1516.741162208,
+        "tooling": 486.7815680420001,
+        "unit": 1550.666420834
+      },
+      "source": {
+        "discovered_ids": 9005,
+        "selected_ids": 9005,
+        "observed_cases": 9005,
+        "fixture_skipped_cases": 0,
+        "missing": 0,
+        "duplicates": 0,
+        "case_outcomes": {
+          "pass": 8995,
+          "skip": 8,
+          "fail": 2
+        },
+        "subtest_outcomes": {
+          "pass": 4717
+        },
+        "subtest_only_cases": 0,
+        "failed_case_ids": [
+          "failure-case-01",
+          "failure-case-02"
+        ],
+        "worker_elapsed_seconds": [
+          1456.570937125,
+          1506.023416708,
+          1458.708132958,
+          1482.292886333,
+          1547.0624995,
+          1459.610665583
+        ],
+        "worker_unallocated_seconds": [
+          17.350274126997874,
+          15.739313773996628,
+          15.123431418003747,
+          15.806846302000167,
+          13.623104913998759,
+          17.532403091000333
+        ],
+        "population_tag": "cohort-A",
+        "population_identity_evidence": "Reconciled in the original private audit; case IDs are not released."
+      },
+      "public": {
+        "discovered_ids": 9005,
+        "selected_ids": 9005,
+        "observed_cases": 9005,
+        "fixture_skipped_cases": 0,
+        "missing": 0,
+        "duplicates": 0,
+        "case_outcomes": {
+          "pass": 8923,
+          "skip": 79
+        },
+        "subtest_outcomes": {
+          "pass": 4695,
+          "skip": 8
+        },
+        "subtest_only_cases": 3,
+        "failed_case_ids": [],
+        "worker_elapsed_seconds": [
+          1401.092033292,
+          1468.316547916,
+          1413.3444682079999,
+          1442.748479125,
+          1506.755810375,
+          1408.563686209
+        ],
+        "worker_unallocated_seconds": [
+          8.408223499999167,
+          8.504332697997825,
+          7.675149236997413,
+          7.924826603999236,
+          5.993303955999636,
+          7.702851452001369
+        ],
+        "population_tag": "cohort-A",
+        "population_identity_evidence": "Reconciled in the original private audit; case IDs are not released."
+      },
+      "tooling": {
+        "inventory_entries": 48,
+        "pass": 48,
+        "skip": 0,
+        "fail": 0,
+        "known_fail": 0,
+        "unique_fragment_run_ids": true,
+        "entries": [
+          {
+            "name": "entry-01",
+            "elapsed_seconds": 5.106512040999999,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-02",
+            "elapsed_seconds": 47.510881375,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-03",
+            "elapsed_seconds": 43.120862375,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-04",
+            "elapsed_seconds": 0.9823764580000001,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-05",
+            "elapsed_seconds": 32.835302416000005,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-06",
+            "elapsed_seconds": 0.6021352919999998,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-07",
+            "elapsed_seconds": 174.62544391699998,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-08",
+            "elapsed_seconds": 89.202654709,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-09",
+            "elapsed_seconds": 94.87829274999996,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-10",
+            "elapsed_seconds": 0.13253049999998723,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-11",
+            "elapsed_seconds": 9.159681750000004,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-12",
+            "elapsed_seconds": 1.4044287500000223,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-13",
+            "elapsed_seconds": 27.008934124999996,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-14",
+            "elapsed_seconds": 54.25673324999997,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-15",
+            "elapsed_seconds": 57.15306133299998,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-16",
+            "elapsed_seconds": 5.22430937499999,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-17",
+            "elapsed_seconds": 0.5897485830000164,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-18",
+            "elapsed_seconds": 0.1037300830000163,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-19",
+            "elapsed_seconds": 0.49564829100000907,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-20",
+            "elapsed_seconds": 0.04817095900000368,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-21",
+            "elapsed_seconds": 6.767367207999996,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-22",
+            "elapsed_seconds": 1.4508074590000035,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-23",
+            "elapsed_seconds": 1.1821583750000286,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-24",
+            "elapsed_seconds": 0.073010083999975,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-25",
+            "elapsed_seconds": 1.055998250000016,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-26",
+            "elapsed_seconds": 0.16481375000000753,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-27",
+            "elapsed_seconds": 0.10304983300000004,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-28",
+            "elapsed_seconds": 0.10452679199997306,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-29",
+            "elapsed_seconds": 0.4479624999999885,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-30",
+            "elapsed_seconds": 0.198725292000006,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-31",
+            "elapsed_seconds": 8.083828084000004,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-32",
+            "elapsed_seconds": 0.053178458999980194,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-33",
+            "elapsed_seconds": 0.16496241600000872,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-34",
+            "elapsed_seconds": 0.9698569579999798,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-35",
+            "elapsed_seconds": 4.601098291000028,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-36",
+            "elapsed_seconds": 3.8339887920000137,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-37",
+            "elapsed_seconds": 16.976027791999968,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-38",
+            "elapsed_seconds": 20.813133166,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-39",
+            "elapsed_seconds": 2.2885206670000002,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-40",
+            "elapsed_seconds": 1.798777040999994,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-41",
+            "elapsed_seconds": 234.54904937499998,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-42",
+            "elapsed_seconds": 2.3312734589999877,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-43",
+            "elapsed_seconds": 3.264678375000017,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-44",
+            "elapsed_seconds": 0.5856451669999956,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-45",
+            "elapsed_seconds": 2.08847212500001,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-46",
+            "elapsed_seconds": 11.172217708999995,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-47",
+            "elapsed_seconds": 0.2728590419999932,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-48",
+            "elapsed_seconds": 0.12741712500002222,
+            "status": "PASS",
+            "returncode": 0
+          }
+        ],
+        "fragments": [
+          {
+            "index": 1,
+            "elapsed_seconds": 486.458555166,
+            "returncode": 0,
+            "inventory": [
+              "entry-04",
+              "entry-05",
+              "entry-06",
+              "entry-08",
+              "entry-10",
+              "entry-11",
+              "entry-13",
+              "entry-15",
+              "entry-16",
+              "entry-21",
+              "entry-22",
+              "entry-25",
+              "entry-27",
+              "entry-28",
+              "entry-29",
+              "entry-32",
+              "entry-33",
+              "entry-39",
+              "entry-41",
+              "entry-43",
+              "entry-44",
+              "entry-45",
+              "entry-46"
+            ],
+            "entry_seconds_sum": 486.3974222929999
+          },
+          {
+            "index": 2,
+            "elapsed_seconds": 483.627564208,
+            "returncode": 0,
+            "inventory": [
+              "entry-01",
+              "entry-02",
+              "entry-03",
+              "entry-07",
+              "entry-09",
+              "entry-12",
+              "entry-14",
+              "entry-17",
+              "entry-18",
+              "entry-19",
+              "entry-20",
+              "entry-23",
+              "entry-24",
+              "entry-26",
+              "entry-30",
+              "entry-31",
+              "entry-34",
+              "entry-35",
+              "entry-36",
+              "entry-37",
+              "entry-38",
+              "entry-40",
+              "entry-42",
+              "entry-47",
+              "entry-48"
+            ],
+            "entry_seconds_sum": 483.567419625
+          }
+        ]
+      },
+      "guard_calls": 0,
+      "anchored_cleanup_complete": true,
+      "owned_process_group_absent": true,
+      "candidate_label": "candidate-A"
+    },
+    {
+      "id": "repaired_fixtures_tooling4",
+      "samples": 1,
+      "evidence_type": "observed_complete_execution",
+      "comparison_kind": "cross_version_not_a_paired_causal_experiment",
+      "content_clean": true,
+      "runtime": {
+        "architecture": "arm64",
+        "os": "Darwin",
+        "python": "3.9.6"
+      },
+      "environment": {
+        "logical_cpus": 12,
+        "start_load_averages": [
+          0.5576171875,
+          1.0087890625,
+          1.02490234375
+        ],
+        "other_host_tests_probes_large_builds": "held",
+        "foreign_editing_worker": "paused with zero CPU; retained memory",
+        "cache_state": "not controlled as a paired experiment",
+        "thermal_state": "not measured"
+      },
+      "geometry": {
+        "first_phase": {
+          "source_workers": 6,
+          "public_workers": 6,
+          "overlap": true
+        },
+        "second_phase": {
+          "tooling_workers": 4,
+          "after_both_first_phase_stages_reaped": true
+        },
+        "declared_cpu_slots": 12,
+        "normal_build": true,
+        "normal_outer_admission": true,
+        "cleanup_mode": "anchored-session"
+      },
+      "functional_pass": true,
+      "runner_rc": 0,
+      "wrapper_rc": 0,
+      "report_status": "ok",
+      "target_seconds": 1800,
+      "target_met": false,
+      "elapsed_seconds": {
+        "process_wall": 1817.1442765,
+        "wrapper_including_final_checks": 1817.170689667,
+        "report": 1816.9358367090001,
+        "conservative_complete": 1817.170689667
+      },
+      "stages_seconds": {
+        "portability": 1526.5322820410001,
+        "tooling": 257.1516812919999,
+        "unit": 1559.02677775
+      },
+      "source": {
+        "discovered_ids": 9014,
+        "selected_ids": 9014,
+        "observed_cases": 9014,
+        "fixture_skipped_cases": 0,
+        "missing": 0,
+        "duplicates": 0,
+        "case_outcomes": {
+          "pass": 9006,
+          "skip": 8
+        },
+        "subtest_outcomes": {
+          "pass": 4728
+        },
+        "subtest_only_cases": 0,
+        "failed_case_ids": [],
+        "worker_elapsed_seconds": [
+          1481.2483112090001,
+          1554.989307167,
+          1500.36572625,
+          1464.087746125,
+          1553.4227740830001,
+          1462.239056792
+        ],
+        "worker_unallocated_seconds": [
+          17.874596291994294,
+          16.295859937999012,
+          15.76381999399996,
+          17.948382173001846,
+          13.143018916001893,
+          16.439234697997335
+        ],
+        "population_tag": "cohort-B",
+        "population_identity_evidence": "Reconciled in the original private audit; case IDs are not released."
+      },
+      "public": {
+        "discovered_ids": 9014,
+        "selected_ids": 9014,
+        "observed_cases": 9014,
+        "fixture_skipped_cases": 0,
+        "missing": 0,
+        "duplicates": 0,
+        "case_outcomes": {
+          "pass": 8929,
+          "skip": 82
+        },
+        "subtest_outcomes": {
+          "pass": 4704,
+          "skip": 8
+        },
+        "subtest_only_cases": 3,
+        "failed_case_ids": [],
+        "worker_elapsed_seconds": [
+          1425.291636792,
+          1515.8575067079998,
+          1452.195965375,
+          1405.46620525,
+          1501.9396420409998,
+          1399.325785625
+        ],
+        "worker_unallocated_seconds": [
+          8.5251312709986,
+          7.691090828996721,
+          7.406869672000994,
+          7.1498611940019146,
+          6.04990782300456,
+          6.70261491899555
+        ],
+        "population_tag": "cohort-B",
+        "population_identity_evidence": "Reconciled in the original private audit; case IDs are not released."
+      },
+      "tooling": {
+        "inventory_entries": 48,
+        "pass": 48,
+        "skip": 0,
+        "fail": 0,
+        "known_fail": 0,
+        "unique_fragment_run_ids": true,
+        "entries": [
+          {
+            "name": "entry-01",
+            "elapsed_seconds": 6.057077416,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-02",
+            "elapsed_seconds": 53.05835325,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-03",
+            "elapsed_seconds": 48.009251666,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-04",
+            "elapsed_seconds": 1.158087042,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-05",
+            "elapsed_seconds": 34.253926084,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-06",
+            "elapsed_seconds": 0.6172931659999961,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-07",
+            "elapsed_seconds": 177.229640833,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-08",
+            "elapsed_seconds": 91.42310637499999,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-09",
+            "elapsed_seconds": 95.975931584,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-10",
+            "elapsed_seconds": 0.13301408299997775,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-11",
+            "elapsed_seconds": 9.745301291999994,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-12",
+            "elapsed_seconds": 1.5355932499999767,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-13",
+            "elapsed_seconds": 26.786963166999982,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-14",
+            "elapsed_seconds": 56.42279695900001,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-15",
+            "elapsed_seconds": 61.06818008299999,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-16",
+            "elapsed_seconds": 6.424443875,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-17",
+            "elapsed_seconds": 0.7280287090000002,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-18",
+            "elapsed_seconds": 0.11861495900001273,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-19",
+            "elapsed_seconds": 0.5771957919999977,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-20",
+            "elapsed_seconds": 0.054758500000019694,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-21",
+            "elapsed_seconds": 6.554061415999996,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-22",
+            "elapsed_seconds": 1.6239127080000006,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-23",
+            "elapsed_seconds": 1.2314944160000039,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-24",
+            "elapsed_seconds": 0.08391383399998631,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-25",
+            "elapsed_seconds": 1.2098708750000071,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-26",
+            "elapsed_seconds": 0.19538570800000343,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-27",
+            "elapsed_seconds": 0.12832062500001484,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-28",
+            "elapsed_seconds": 0.12312154200000691,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-29",
+            "elapsed_seconds": 0.5622921250000008,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-30",
+            "elapsed_seconds": 0.23990579200000184,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-31",
+            "elapsed_seconds": 9.124303832999999,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-32",
+            "elapsed_seconds": 0.060346208000000345,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-33",
+            "elapsed_seconds": 0.19747608399999983,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-34",
+            "elapsed_seconds": 1.116631,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-35",
+            "elapsed_seconds": 5.453782708000006,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-36",
+            "elapsed_seconds": 3.4742227080000134,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-37",
+            "elapsed_seconds": 21.857063874999994,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-38",
+            "elapsed_seconds": 25.778141541999986,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-39",
+            "elapsed_seconds": 2.8380093330000022,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-40",
+            "elapsed_seconds": 2.0498296659999937,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-41",
+            "elapsed_seconds": 242.928056166,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-42",
+            "elapsed_seconds": 2.7878742500000158,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-43",
+            "elapsed_seconds": 3.9748808330000145,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-44",
+            "elapsed_seconds": 0.6709209999999928,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-45",
+            "elapsed_seconds": 2.3833994580000137,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-46",
+            "elapsed_seconds": 13.16956108299999,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-47",
+            "elapsed_seconds": 0.31043066699999144,
+            "status": "PASS",
+            "returncode": 0
+          },
+          {
+            "name": "entry-48",
+            "elapsed_seconds": 0.12692866699998717,
+            "status": "PASS",
+            "returncode": 0
+          }
+        ],
+        "fragments": [
+          {
+            "index": 1,
+            "elapsed_seconds": 255.501013125,
+            "returncode": 0,
+            "inventory": [
+              "entry-16",
+              "entry-22",
+              "entry-29",
+              "entry-32",
+              "entry-33",
+              "entry-34",
+              "entry-41",
+              "entry-45",
+              "entry-48"
+            ],
+            "entry_seconds_sum": 255.42348629100002
+          },
+          {
+            "index": 2,
+            "elapsed_seconds": 254.471365583,
+            "returncode": 0,
+            "inventory": [
+              "entry-04",
+              "entry-05",
+              "entry-07",
+              "entry-12",
+              "entry-18",
+              "entry-19",
+              "entry-20",
+              "entry-26",
+              "entry-31",
+              "entry-35",
+              "entry-37",
+              "entry-39"
+            ],
+            "entry_seconds_sum": 254.396361917
+          },
+          {
+            "index": 3,
+            "elapsed_seconds": 255.161606125,
+            "returncode": 0,
+            "inventory": [
+              "entry-01",
+              "entry-03",
+              "entry-06",
+              "entry-09",
+              "entry-10",
+              "entry-11",
+              "entry-13",
+              "entry-15",
+              "entry-17",
+              "entry-27",
+              "entry-36",
+              "entry-40",
+              "entry-47"
+            ],
+            "entry_seconds_sum": 255.08384483199993
+          },
+          {
+            "index": 4,
+            "elapsed_seconds": 256.806290792,
+            "returncode": 0,
+            "inventory": [
+              "entry-02",
+              "entry-08",
+              "entry-14",
+              "entry-21",
+              "entry-23",
+              "entry-24",
+              "entry-25",
+              "entry-28",
+              "entry-30",
+              "entry-38",
+              "entry-42",
+              "entry-43",
+              "entry-44",
+              "entry-46"
+            ],
+            "entry_seconds_sum": 256.728003167
+          }
+        ]
+      },
+      "guard_calls": 0,
+      "anchored_cleanup_complete": true,
+      "owned_process_group_absent": true,
+      "candidate_label": "candidate-B"
+    }
+  ],
+  "estimates": [
+    {
+      "id": "old_tooling_costs_replayed_on_four_partitions",
+      "evidence_type": "counterfactual_arithmetic_not_execution",
+      "based_on": "before_fixture_repair_tooling2",
+      "assumptions": [
+        "unchanged per-entry costs",
+        "no new scheduling/contention overhead",
+        "unchanged first-phase cost"
+      ],
+      "tooling_seconds": 242.50698996,
+      "complete_phase_sum_seconds": 1793.1734107940001,
+      "margin_below_target_seconds": 6.8265892059998805,
+      "actual_under30_result": false
+    },
+    {
+      "id": "current_tooling_four_worker_lower_bound",
+      "evidence_type": "arithmetic_lower_bound_from_one_observed_run_not_a_forecast",
+      "based_on": "repaired_fixtures_tooling4",
+      "entry_seconds_sum": 1021.631696207,
+      "lower_bound_seconds": 255.40792405175,
+      "observed_tooling_stage_seconds": 257.1516812919999,
+      "maximum_idealized_reassignment_opportunity_seconds": 1.74375724024992,
+      "can_recover_observed_17_second_gap_by_assignment_alone_at_these_costs": false
+    }
+  ],
+  "latest_acceptance": {
+    "functional_pass": true,
+    "conservative_complete_seconds": 1817.170689667,
+    "target_seconds": 1800,
+    "target_met": false,
+    "seconds_over_target": 17.170689667000033,
+    "all_previous_9005_ids_retained": true,
+    "new_ids": 9,
+    "new_skips_among_previous_ids": 0,
+    "guard_calls": 0,
+    "anchored_cleanup_complete": true
+  }
+}
