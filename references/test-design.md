@@ -7,7 +7,8 @@
 2. Add or repair the test with only the mutable state it needs. For a regression,
    check the relevant bad version fails for the intended reason when feasible.
 3. Run the named test and affected callers required by the project. Report the
-   behavior checked and the result. One or two tests end on this short path.
+   behavior checked and the result. Isolated edits without the risky boundaries
+   or runner changes below can end on this short path.
    Speed work and measurement work read the
    [quality contract](quality-contract.md) and
    [suite optimization](suite-optimization.md).
@@ -19,9 +20,10 @@ isolation care as shared clock patches; prefer a seam owned by the behavior.
 For example, a pure parser regression can be one input/expected-output row and
 its focused test command. If it changes a clock binding, launches a child, shares
 mutable state, caches preparation or checks a refusal/cleanup guard, continue to
-the relevant controls below even if only one test changes. Runner, discovery,
-sharding, or concurrency changes read the [suite procedure](suite-optimization.md)
-when they speed the suite up or measure it.
+the relevant controls below even if only one test changes. Runner discovery,
+placement, sharding or concurrency changes also use the relevant inventory,
+fixture and ownership controls in the [suite procedure](suite-optimization.md),
+even without a performance goal.
 
 ## Investigate intermittent failures
 

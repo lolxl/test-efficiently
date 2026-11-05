@@ -1,6 +1,6 @@
 ---
 name: test-efficiently
-description: Write or repair useful tests, diagnose flakiness and costly fixtures, and speed up suites without weakening behavior or evidence. For one or two tests, read only references/test-design.md. Read references/quality-contract.md and references/suite-optimization.md when speeding up or measuring. Ordinary edits without a testing question do not need this skill.
+description: Write or repair useful tests, diagnose flakiness and costly fixtures, and speed up suites without weakening behavior or evidence. Isolated test edits start with references/test-design.md. Runner discovery, placement, sharding or concurrency changes use the relevant controls in references/suite-optimization.md even without a speed claim. Speed and measurement work also reads references/quality-contract.md. Ordinary edits without a testing question do not need this skill.
 license: MIT
 ---
 
@@ -17,7 +17,7 @@ covered by [MIT](LICENSE); that license does not cover other repository content.
   [flakiness diagnosis](references/test-design.md#investigate-intermittent-failures).
   Preserve the failed run and investigate its context before choosing a repair;
   a passing quiet replay does not establish a cause.
-- **Adding or repairing one or two tests:** read only
+- **Adding or repairing one or two isolated tests:** read
   [test design](references/test-design.md), starting at the
   [short test-design path](references/test-design.md#short-path-for-an-isolated-change).
   A pure input/output assertion usually needs no suite inventory or benchmark.
@@ -26,9 +26,10 @@ covered by [MIT](LICENSE); that license does not cover other repository content.
   Scale verification to affected behavior and risk, rather than test count.
 - **Clocks, child processes, shared mutable fixtures, caches, refusal or cleanup
   guards:** read the relevant [test-design controls](references/test-design.md#controls-for-risky-boundaries)
-  even for a single test. Read the quality contract and the suite procedure
-  when that change speeds the suite up or measures it. Test count alone does
-  not determine risk.
+  even for a single test. Test count alone does not determine risk.
+- **Runner discovery, placement, sharding or concurrency changes:** use the
+  [suite procedure](references/suite-optimization.md) for the relevant population,
+  fixture and ownership controls, even when fixing correctness without a speed claim.
 - **Test-cost investigation or suite-speed improvement:** read the
   [final checklist](references/quality-contract.md) and follow the numbered
   [suite-optimization procedure](references/suite-optimization.md). It produces
@@ -60,6 +61,6 @@ constraints and the observation that would disprove the proposed improvement.
 
 When speeding a suite up or measuring it, apply the
 [final checklist](references/quality-contract.md) once before reporting.
-One or two added tests report the behavior checked and the result from the
+Isolated test edits report the behavior checked and the result from the
 short path. Follow the project's authorization, isolation and release rules.
 This skill grants no extra execution or publication permission.
