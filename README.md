@@ -32,6 +32,24 @@ files available; no harness integration, scripts or service connection is requir
 
 ## Evidence and license
 
+### Case study numbers
+
+The chart uses rounded display values from the [anonymous case study](references/case-study.md) and [data/benchmark-runs.json](data/benchmark-runs.json).
+
+Candidate A is `before_fixture_repair_tooling2`. Candidate B is `repaired_fixtures_tooling4`.
+
+Both record `target_met` as false against `target_seconds` 1800. Complete time is `elapsed_seconds.conservative_complete`. Tooling time is `stages_seconds.tooling`.
+
+Candidate A records `functional_pass` as false. Candidate B records `functional_pass` as true. The runs are separate observations.
+
+```mermaid
+xychart-beta
+    title "Complete time and tooling stage"
+    x-axis ["A complete", "B complete", "Target", "A tooling", "B tooling"]
+    y-axis "Seconds" 0 --> 2200
+    bar [2038.383, 1817.171, 1800, 486.782, 257.152]
+```
+
 The [anonymous case study](references/case-study.md) and
 [sanitized measurements](data/benchmark-runs.json) are self-contained examples.
 The originating codebase is unpublished. Only authorized aggregate measurements

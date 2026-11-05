@@ -7,8 +7,10 @@
 2. Add or repair the test with only the mutable state it needs. For a regression,
    check the relevant bad version fails for the intended reason when feasible.
 3. Run the named test and affected callers required by the project. Report the
-   behavior checked and result; use the [final checklist](quality-contract.md)
-   before reporting. No benchmark is needed unless making a speed claim.
+   behavior checked and the result. One or two tests end on this short path.
+   Speed work and measurement work read the
+   [quality contract](quality-contract.md) and
+   [suite optimization](suite-optimization.md).
 
 For any mock, preserve the unrelated runtime mechanisms the test still needs.
 Global patches of process helpers, environment or random state need the same

@@ -53,18 +53,18 @@
     }
   ],
   "evidence_disclosures": {
-    "historical_inventory": "The earlier_reported_inventory_evidence block re-encodes the existing case-study narrative, not independent corroboration. Original sample counts and the statistic type behind 1345.083 seconds are unavailable in the public material; null does not mean no samples existed. Raw observations and the reason for the historical 45-to-later-48 inventory difference are not supplied.",
-    "narrative_only_earlier_figures": "The case-study figures 115.41 minutes, roughly 0.339%, the withdrawn roughly 182-second estimate, and 3399.379 seconds have no corresponding released structured measurements or raw records. They remain reported historical narrative with its stated observation/estimate distinctions.",
+    "historical_inventory": "The earlier_reported_inventory_evidence block re-encodes the existing case-study narrative, not independent corroboration. Original sample counts and the statistic type behind 1345.083 seconds are unavailable in the released material. Null does not mean no samples existed. Raw observations and the reason for the historical 45-to-later-48 inventory difference are not supplied.",
+    "narrative_only_earlier_figures": "The case-study figures 115.41 minutes, roughly 0.339%, the withdrawn roughly 182-second estimate, and 3399.379 seconds have no corresponding released structured measurements or raw records. The 19-subcase count, the seven profiled intervals, and the 56.66-minute rendering of 3399.379 divided by 60 are narrative-only, text-report-only phrases and have no JSON field. The 25.4 percent median paired reduction and the pairs value 7 stay on the earlier_reported_subset_evidence entry scoped to field CLI reads. Keep the observation and estimate distinctions already stated for the narrative figures.",
     "retained_case_skip_claim": {
       "reported_contexts": [
         "source",
         "public"
       ],
-      "provenance": "The author reports that the original retained-ID audit confirmed no new skips among the earlier 9005 IDs in both contexts. The public aggregates do not include the per-ID mapping and cannot independently reproduce that audit."
+      "provenance": "Author-reported retained-ID audit for the earlier 9005 IDs in the source context and the public/portable-copy context. new_skips_among_previous_ids stores that reported count, 0. The released aggregates omit the per-ID mapping, so a reader cannot recompute that 0 from those totals."
     },
     "public_added_case_skip_inference": {
       "minimum_added_ids_with_case_level_skip": 3,
-      "basis": "Public case-level skip totals rose from 79 to 82. Conditional on the author-reported absence of new retained-ID skips, at least three added IDs are skipped. Added-ID identities and any retained skip-to-pass transitions are not supplied."
+      "basis": "The public/portable-copy context's case-level skip totals rose from 79 to 82. Conditional on the author-reported absence of new retained-ID skips, at least three added IDs are skipped. Added-ID identities and any retained skip-to-pass transitions are not supplied."
     }
   },
   "runs": [
@@ -81,11 +81,6 @@
       },
       "environment": {
         "logical_cpus": 12,
-        "start_load_averages": [
-          0.67724609375,
-          0.90283203125,
-          1.22119140625
-        ],
         "other_host_tests_probes_large_builds": "held",
         "foreign_editing_worker": "paused with zero CPU; retained memory",
         "cache_state": "not controlled as a paired experiment",
@@ -580,11 +575,6 @@
       },
       "environment": {
         "logical_cpus": 12,
-        "start_load_averages": [
-          0.5576171875,
-          1.0087890625,
-          1.02490234375
-        ],
         "other_host_tests_probes_large_builds": "held",
         "foreign_editing_worker": "paused with zero CPU; retained memory",
         "cache_state": "not controlled as a paired experiment",
