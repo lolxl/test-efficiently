@@ -5,6 +5,16 @@ existing runner reports and project notes; a table or a few task-response lines
 may suffice. It does not require a new report format or test framework. For a
 small isolated test edit, start with [test design](test-design.md#short-path-for-an-isolated-change).
 
+## Correctness-only runner changes
+
+For discovery, placement, sharding or concurrency changes without a performance
+claim, record the content, command and execution context, then use step 2's
+before-change inventory, the relevant step-4 controls, and step 5's post-change
+ID/skip/outcome reconciliation, terminal-status and cleanup checks. Finish with
+the applicable checklist items in step 6. This route needs no timing baseline
+or step-3 performance experiment; the project's required verification gates
+still apply.
+
 ## 1. Define the question and baseline boundary
 
 **Input:** The requested time budget, correctness requirements and real runner.
@@ -71,7 +81,9 @@ for clocks, subprocess boundaries or guard sensitivity.
   Case-only cost can omit expensive setup; moving identical IDs can create setup
   or destroy fixture affinity. Retain conservative fallback for uncertain modules.
 - **Concurrency/ownership:** Enumerate shared writers and nested pools; define
-  resource limits and keep the existing outer admission and isolation active.
+  resource limits and keep isolation active. Keep outer admission active too.
+  Outer admission is the project's existing permission and resource check
+  before launching work.
   Two overlapping six-worker stages require twelve declared slots; a later
   four-worker stage need not overlap them. Slots cannot split an indivisible test.
   Keep ownership through the last child and cleanup. Check owned processes are
@@ -92,27 +104,24 @@ entry execution, required stages, guard observations and reaping. Resolve schema
 assumptions against an actual producer report; do not write a permissive reader
 around invented telemetry.
 
-A causal local improvement claim requires comparable paired measurements:
-use interleaved baseline/candidate runs and report the number of pairs,
-distributions, measured boundary and relevant controlled conditions. Without
-comparable paired evidence, report observations or a hypothesis instead of a
-causal improvement. If only one complete run is authorized, keep it as n=1;
-do not silently repeat it to meet a target.
+For a local comparison, interleave baseline and candidate runs and record the
+pair count, the distribution, the measured boundary and the controlled
+conditions. Apply the Claim item in the
+[final checklist](quality-contract.md) to that sample.
 
 **Decision:** A failed/interrupted run is evidence to investigate and retain.
 If the complete run passes but exceeds the target, correctness passed and the
 performance target was missed. Select further work from its measured critical
 path; an unchanged retry needs a named reason.
 If local paired results are mixed, return to step 3 or stop and record the
-rejected proposal; do not select only favorable samples.
+rejected proposal.
 
 ## 6. Report the result at the supported scope
 
 **Input:** The retained baseline, candidate reports, costs and limitations.
 
-**Output:** Separate behavior, population and timing conclusions; measured
-scope/sample size, validation cost and the next justified action. Apply the
-[final checklist](quality-contract.md) once before reporting.
+**Output:** Apply the [final checklist](quality-contract.md) once before
+reporting.
 
 **Decision:** Accept the supported claim or state the remaining gap. An arithmetic
 partition or average-load bound needs fixture lifecycle, setup, contention,
@@ -121,9 +130,9 @@ for the actual requirement instead of treating a barely favorable estimate as a 
 
 ## If releasing an anonymous benchmark
 
-Permission to release measurements does not make their originating repository
-or identity public. Verify actual visibility; authenticated access is not proof
-of public availability. For an unpublished source, use anonymous candidate,
+Permission to release measurements does not publish the originating repository
+or its identity. Verify actual visibility. Authenticated access does not show
+that the repository is published. For an unpublished source, use anonymous candidate,
 cohort and entry labels and omit repository/issue links, revision IDs, internal
 names, private paths, accounts and host/process identifiers.
 
@@ -131,5 +140,5 @@ Keep permitted counts, timings, outcomes, geometry, sample size and limitations.
 Disclose when original code, inventory identities or raw records are unavailable;
 aggregate counts alone do not independently prove those private checks. Inspect
 filenames, contents and all reachable publication history, not only the latest
-working tree. Keep private source context and the portable public skill in
+working tree. Keep private source context and the published skill package in
 separate deliverables.

@@ -7,8 +7,11 @@
 2. Add or repair the test with only the mutable state it needs. For a regression,
    check the relevant bad version fails for the intended reason when feasible.
 3. Run the named test and affected callers required by the project. Report the
-   behavior checked and result; use the [final checklist](quality-contract.md)
-   before reporting. No benchmark is needed unless making a speed claim.
+   behavior checked and the result. Isolated edits without the risky boundaries
+   or runner changes below can end on this short path.
+   Other work applies the relevant [final checklist](quality-contract.md) items
+   after its controls. Speed and measurement work also uses the
+   [suite procedure](suite-optimization.md).
 
 For any mock, preserve the unrelated runtime mechanisms the test still needs.
 Global patches of process helpers, environment or random state need the same
@@ -17,8 +20,11 @@ isolation care as shared clock patches; prefer a seam owned by the behavior.
 For example, a pure parser regression can be one input/expected-output row and
 its focused test command. If it changes a clock binding, launches a child, shares
 mutable state, caches preparation or checks a refusal/cleanup guard, continue to
-the relevant controls below even if only one test changes. Runner/discovery,
-sharding or concurrency changes also need the [suite procedure](suite-optimization.md).
+the relevant controls below even if only one test changes. Runner discovery,
+placement, sharding or concurrency changes also use the relevant inventory,
+fixture and ownership controls via the
+[correctness-only runner path](suite-optimization.md#correctness-only-runner-changes)
+when there is no performance goal.
 
 ## Investigate intermittent failures
 
