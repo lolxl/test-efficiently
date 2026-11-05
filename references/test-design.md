@@ -9,9 +9,9 @@
 3. Run the named test and affected callers required by the project. Report the
    behavior checked and the result. Isolated edits without the risky boundaries
    or runner changes below can end on this short path.
-   Speed work and measurement work read the
-   [quality contract](quality-contract.md) and
-   [suite optimization](suite-optimization.md).
+   Other work applies the relevant [final checklist](quality-contract.md) items
+   after its controls. Speed and measurement work also uses the
+   [suite procedure](suite-optimization.md).
 
 For any mock, preserve the unrelated runtime mechanisms the test still needs.
 Global patches of process helpers, environment or random state need the same
@@ -22,8 +22,9 @@ its focused test command. If it changes a clock binding, launches a child, share
 mutable state, caches preparation or checks a refusal/cleanup guard, continue to
 the relevant controls below even if only one test changes. Runner discovery,
 placement, sharding or concurrency changes also use the relevant inventory,
-fixture and ownership controls in the [suite procedure](suite-optimization.md),
-even without a performance goal.
+fixture and ownership controls via the
+[correctness-only runner path](suite-optimization.md#correctness-only-runner-changes)
+when there is no performance goal.
 
 ## Investigate intermittent failures
 

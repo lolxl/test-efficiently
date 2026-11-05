@@ -17,7 +17,7 @@ covered by [MIT](LICENSE); that license does not cover other repository content.
   [flakiness diagnosis](references/test-design.md#investigate-intermittent-failures).
   Preserve the failed run and investigate its context before choosing a repair;
   a passing quiet replay does not establish a cause.
-- **Adding or repairing one or two isolated tests:** read
+- **Small, isolated test additions or repairs with a known behavior:** read
   [test design](references/test-design.md), starting at the
   [short test-design path](references/test-design.md#short-path-for-an-isolated-change).
   A pure input/output assertion usually needs no suite inventory or benchmark.
@@ -28,8 +28,9 @@ covered by [MIT](LICENSE); that license does not cover other repository content.
   guards:** read the relevant [test-design controls](references/test-design.md#controls-for-risky-boundaries)
   even for a single test. Test count alone does not determine risk.
 - **Runner discovery, placement, sharding or concurrency changes:** use the
-  [suite procedure](references/suite-optimization.md) for the relevant population,
-  fixture and ownership controls, even when fixing correctness without a speed claim.
+  [correctness-only runner path](references/suite-optimization.md#correctness-only-runner-changes)
+  when there is no performance claim. Speed or measurement work uses the full
+  suite procedure below.
 - **Test-cost investigation or suite-speed improvement:** read the
   [final checklist](references/quality-contract.md) and follow the numbered
   [suite-optimization procedure](references/suite-optimization.md). It produces
@@ -59,8 +60,9 @@ constraints and the observation that would disprove the proposed improvement.
   A **cohort** is the case population for one candidate. Anonymous labels retain
   these distinctions without revealing original names.
 
-When speeding a suite up or measuring it, apply the
-[final checklist](references/quality-contract.md) once before reporting.
-Isolated test edits report the behavior checked and the result from the
-short path. Follow the project's authorization, isolation and release rules.
+For non-isolated work, flakiness, risky boundaries, runner changes, and speed or
+measurement work, apply the relevant [final checklist](references/quality-contract.md)
+items once before reporting. Pure isolated edits report the behavior checked and
+the result from the short path. Follow the project's authorization, isolation
+and release rules.
 This skill grants no extra execution or publication permission.

@@ -5,6 +5,16 @@ existing runner reports and project notes; a table or a few task-response lines
 may suffice. It does not require a new report format or test framework. For a
 small isolated test edit, start with [test design](test-design.md#short-path-for-an-isolated-change).
 
+## Correctness-only runner changes
+
+For discovery, placement, sharding or concurrency changes without a performance
+claim, record the content, command and execution context, then use step 2's
+before-change inventory, the relevant step-4 controls, and step 5's post-change
+ID/skip/outcome reconciliation, terminal-status and cleanup checks. Finish with
+the applicable checklist items in step 6. This route needs no timing baseline
+or step-3 performance experiment; the project's required verification gates
+still apply.
+
 ## 1. Define the question and baseline boundary
 
 **Input:** The requested time budget, correctness requirements and real runner.
