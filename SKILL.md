@@ -24,6 +24,10 @@ covered by [MIT](LICENSE); that license does not cover other repository content.
 - **General test writing across several behaviors:** apply the short path to
   each behavior and use the [layer-selection table](references/test-design.md#choose-the-observation-before-the-machinery).
   Scale verification to affected behavior and risk, rather than test count.
+- **Review existing tests or decide which to move, combine or retire:** use
+  the [case-by-case review](references/test-review.md), including its optional
+  worksheet. Review only the relevant cases; ordinary isolated edits keep the
+  short path above.
 - **Clocks, child processes, shared mutable fixtures, caches, refusal or cleanup
   guards:** read the relevant [test-design controls](references/test-design.md#controls-for-risky-boundaries)
   even for a single test. Test count alone does not determine risk.

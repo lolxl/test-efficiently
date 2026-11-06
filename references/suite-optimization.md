@@ -45,6 +45,9 @@ assign all unallocated time to fixtures.
 
 **Decision:** If an entry or population cannot be accounted for, resolve that gap
 before deduplicating, moving or excluding it. Matching totals alone are insufficient.
+If the proposal moves, consolidates or retires tests, also make the relevant
+[case-by-case coverage map](test-review.md#copyable-worksheet). An execution
+inventory alone does not establish that their behavioral protection is redundant.
 
 ## 3. Select one binding cost and a falsifiable experiment
 

@@ -66,6 +66,10 @@ needed by the test intact. For a refusal guard, check that valid work still
 runs, the named forbidden action is refused, and disabling that guard makes the
 relevant test fail. An unrelated earlier refusal cannot prove guard sensitivity.
 
+For existing tests whose layer or continued value is in question, use the
+[case-by-case review and worksheet](test-review.md). It maps the behavior,
+real boundaries and side effects before choosing what to retain or move.
+
 For a new test, a useful short design note is: behavior; relevant bad version;
 observation; chosen layer; required mutable isolation; expected expensive work.
 It need not become a new repository template or approval door.
