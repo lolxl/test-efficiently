@@ -1,6 +1,6 @@
 ---
 name: test-efficiently
-description: Write or repair useful tests, diagnose flakiness and costly fixtures, and speed up suites without weakening behavior or evidence. Isolated test edits start with references/test-design.md. Runner discovery, placement, sharding or concurrency changes use the relevant controls in references/suite-optimization.md even without a speed claim. Speed and measurement work also reads references/quality-contract.md. Ordinary edits without a testing question do not need this skill.
+description: Write or repair useful tests, review existing coverage, diagnose flakiness and costly fixtures, and speed up suites without weakening behavior or evidence. Isolated test edits start with references/test-design.md. Runner discovery, placement, sharding or concurrency changes use the relevant controls in references/suite-optimization.md even without a speed claim. Speed and measurement work also reads references/quality-contract.md. Ordinary edits without a testing question do not need this skill.
 license: MIT
 ---
 
