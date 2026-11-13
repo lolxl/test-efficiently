@@ -107,6 +107,54 @@ entry execution, required stages, guard observations and reaping. Resolve schema
 assumptions against an actual producer report; do not write a permissive reader
 around invented telemetry.
 
+### Check the report reader as well as the runner
+
+Use an actual report from the producer and its native validator, when available,
+before adding experiment-specific checks. Do not infer that an absent field is
+an empty list or a zero. Exercise the reader with a missing case, duplicate case,
+bad fixture, unknown outcome, nonzero worker status and stale candidate identity;
+each should reject the corresponding unsupported success claim.
+
+Reconcile each execution context separately. For a targeted run, the selected
+IDs should match the requested cohort; they need not equal all discovered IDs.
+For a complete run, check the required full population. Within each worker's
+selection, account for completed cases and any explicitly unobserved cases using
+the producer's rules. A fixture skip can explain an unstarted case only when its
+scope actually covers that case. A parent with only subtests still needs real
+recorded subtest outcomes; do not invent a parent pass or drop its ID. Count skips
+as skips, and inspect case, subtest and fixture failures even when a worker exits
+zero. A correct grand total cannot repair a duplicate identity or an omitted case.
+
+If the candidate or its base changes, retain the old result under its old content
+identity. Choose new validation from the actual combined change and project
+policy: a previously green targeted subset does not validate a newly integrated
+runner. An unrelated editorial edit alone is not a reason to repeat a complete
+run; follow the project's required checks.
+
+### Preserve useful evidence before releasing scratch
+
+Capture worker measurements and diagnostic output before a refusal or cleanup
+path can destroy them. Test that ordering by injecting the late failure and
+checking that the original case results and failure details remain available.
+A summary with outcomes but no failure text can locate a bad case without
+explaining it; preserve enough local diagnostic output to choose the next repair.
+
+Bind saved logs to the invocation, stage and worker, rather than only a reusable
+report filename. Test a second invocation using the same report path: it must not
+silently pair a new report with old logs or overwrite unrelated evidence. Check
+nested or copied-tree stages too; their logs may disappear with their work tree
+even when top-level logs survive. State that limitation instead of claiming all
+worker output is durable. Raw logs can contain sensitive data; keep them local
+unless explicitly authorized and sanitized for release.
+
+When cleanup retains shared scratch, report every location the retain decision
+keeps, not only the directory whose removal first failed. Record operation,
+worker, collector and cleanup statuses separately where those components exist;
+a successful observer or successful service restoration is not a passing suite.
+Use the [process and cleanup controls](test-design.md#test-cancellation-and-cleanup-as-observable-behavior)
+when changing those lifecycle paths. Keep retained evidence and unattributed
+residue distinct, and preserve the failed attempt before considering another run.
+
 For a local comparison, interleave baseline and candidate runs and record the
 pair count, the distribution, the measured boundary and the controlled
 conditions. Apply the Claim item in the
