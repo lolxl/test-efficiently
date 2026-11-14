@@ -1,45 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 720" role="img" aria-labelledby="arcTitle arcDesc">
-  <title id="arcTitle">Improvement arc, complete time</title>
-  <desc id="arcDesc">Bar length is minutes. Point 1 is 115.41 minutes, 1 hour 55.41 minutes, a case-study narrative-only figure with no JSON field. Point 2 is 3,399.379 seconds, about 56 minutes 40 seconds, a case-study narrative-only figure with no JSON field. Point 3 is Candidate A, before_fixture_repair_tooling2, JSON rounded display 2038.383 seconds, about 33 minutes 58 seconds. Point 4 is Candidate B, repaired_fixtures_tooling4, JSON rounded display 1817.171 seconds, 30m17.171s. Point 5 is the 30-minute target, 1800 seconds.</desc>
-  <rect width="1180" height="720" fill="#ffffff"/>
-  <text x="32" y="36" fill="#1c1c1c" font-family="Arial, Helvetica, sans-serif" font-size="22">Improvement arc, complete time</text>
-  <text x="32" y="64" fill="#1c1c1c" font-family="Arial, Helvetica, sans-serif" font-size="15">Bar length is minutes. Point 1 is 115.41 minutes. Later bars use the labeled seconds divided by 60.</text>
-  <text x="32" y="84" fill="#1c1c1c" font-family="Arial, Helvetica, sans-serif" font-size="15">The division sets the bar length.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 1504" role="img" aria-labelledby="chartTitle chartDesc">
+  <title id="chartTitle">Paired savings, and separate complete-suite observations</title>
+  <desc id="chartDesc">Controlled pairs come first. Matrix subset: baseline median 104.244 seconds, candidate median 50.687 seconds, median paired reduction 51.47 percent, 3 pairs, 6 runs. Those bars use 4.2 pixels per second. CLI reads: median paired reduction 25.4 percent, 7 pairs, every pair improved. No absolute seconds are shown. That bar uses 4 pixels per percentage point on a 0 to 100 percent scale. Tooling stage: two separate single observations, not a paired measurement, Candidate A 486.782 seconds with 2 fragments and Candidate B 257.152 seconds with 4 fragments, at 1.4 pixels per second. Complete-suite points are separate observations with different content and configuration, not a controlled before/after. Bar length is minutes at 7.8 pixels per minute: 115.41 for the narrative-only validation, and stated seconds divided by 60 for the rest. 3,399.379 seconds is the narrative-only figure whose published rendering is 56.66 minutes. Candidate A is 2038.383 seconds, approximately 33m58s, and failed two source cases. Candidate B is 1817.171 seconds, 30m17.171s, passed, and is still above the 1800 second target. 1817.171 minus 1800 is 17.171 seconds.</desc>
+  <rect width="1040" height="1504" fill="#ffffff"/>
 
   <g font-family="Arial, Helvetica, sans-serif" fill="#1c1c1c">
-    <text x="32" y="128" font-size="16">1. 115.41 minutes, 1 hour 55.41 minutes</text>
-    <text x="32" y="150" font-size="15" font-weight="700">Case-study narrative-only, no JSON field</text>
-    <text x="32" y="172" font-size="15">Complete validation that passed, not the paired benchmark.</text>
-    <rect x="640" y="112" width="500" height="26" fill="#f6f0e4" stroke="#7a5b2e" stroke-width="2"/>
+    <rect x="16" y="16" width="1008" height="624" rx="14" fill="#f2f7f4"/>
+    <text x="40" y="58" font-size="28" font-weight="700">Paired tests: how much time was saved</text>
+    <text x="40" y="86" font-size="17">Same content, measured before and after.</text>
 
-    <text x="32" y="224" font-size="16">2. 3,399.379 seconds, about 56 minutes 40 seconds</text>
-    <text x="32" y="246" font-size="15" font-weight="700">Case-study narrative-only, no JSON field</text>
-    <text x="32" y="268" font-size="15">56.66 minutes is 3,399.379 divided by 60.</text>
-    <rect x="640" y="208" width="245.46" height="26" fill="#f6f0e4" stroke="#7a5b2e" stroke-width="2"/>
+    <text x="40" y="130" font-size="22" font-weight="700">Matrix subset</text>
+    <text x="40" y="156" font-size="17">3 pairs, 6 runs. Bar length is seconds.</text>
+    <text x="40" y="224" font-size="64" font-weight="700" fill="#0b6b3a">51.47%</text>
+    <text x="360" y="202" font-size="18">median paired reduction</text>
+    <text x="360" y="226" font-size="16">baseline median against the candidate median</text>
 
-    <text x="32" y="320" font-size="16">3. Candidate A, before_fixture_repair_tooling2</text>
-    <text x="32" y="342" font-size="15">2038.383 seconds, about 33 minutes 58 seconds</text>
-    <text x="32" y="364" font-size="15" font-weight="700">JSON-backed rounded display value</text>
-    <rect x="640" y="304" width="147.18" height="26" fill="#1f4b73"/>
+    <text x="40" y="268" font-size="16">Baseline median</text>
+    <rect id="bar-matrix-baseline" x="40" y="276" width="437.8248" height="34" rx="3" fill="#4a5968"/>
+    <text id="label-matrix-baseline" x="491.8248" y="299" font-size="17">104.244 s</text>
 
-    <text x="32" y="416" font-size="16">4. Candidate B, repaired_fixtures_tooling4</text>
-    <text x="32" y="438" font-size="15">1817.171 seconds, 30 minutes 17 seconds, 30m17.171s</text>
-    <text x="32" y="460" font-size="15" font-weight="700">JSON-backed rounded display value</text>
-    <rect x="640" y="400" width="131.21" height="26" fill="#1f4b73"/>
+    <text x="40" y="336" font-size="16">Candidate median</text>
+    <rect id="bar-matrix-candidate" x="40" y="344" width="212.8854" height="34" rx="3" fill="#0b6b3a"/>
+    <text id="label-matrix-candidate" x="266.8854" y="367" font-size="17">50.687 s</text>
 
-    <text x="32" y="512" font-size="16">5. 30-minute target, 1800 seconds</text>
-    <text x="32" y="534" font-size="15">target_seconds 1800</text>
-    <rect x="640" y="496" width="129.97" height="26" fill="#ffffff" stroke="#1f4b73" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="40" y="424" font-size="22" font-weight="700">CLI reads</text>
+    <text x="40" y="450" font-size="17">7 pairs. Every pair improved. Absolute seconds were not released.</text>
+    <text x="40" y="516" font-size="64" font-weight="700" fill="#0b6b3a">25.4%</text>
+    <text x="280" y="494" font-size="18">median paired reduction</text>
+    <text x="280" y="518" font-size="16">Percentage only.</text>
+    <rect id="bar-cli-scale" x="40" y="544" width="400" height="34" rx="3" fill="#d5e6db"/>
+    <rect id="bar-cli-reduction" x="40" y="544" width="101.6" height="34" rx="3" fill="#0b6b3a"/>
+    <text x="40" y="602" font-size="15">0%</text>
+    <text x="440" y="602" font-size="15" text-anchor="end">100%</text>
+    <text x="460" y="566" font-size="16">bar length is the 25.4% reduction</text>
+
+    <rect x="16" y="656" width="1008" height="268" rx="14" fill="#f4f6f8"/>
+    <text x="40" y="698" font-size="22" font-weight="700">Tooling stage</text>
+    <text x="40" y="726" font-size="17" font-weight="700">Two separate single observations, not a paired measurement.</text>
+    <text x="40" y="752" font-size="16">Different fragment counts: 2 and 4. One sample each. Bar length is seconds.</text>
+    <text x="40" y="794" font-size="16">Candidate A, 2 fragments</text>
+    <rect id="bar-tooling-a" x="40" y="802" width="681.4948" height="30" rx="3" fill="#3d5a73"/>
+    <text id="label-tooling-a" x="735.4948" y="823" font-size="17">486.782 s</text>
+    <text x="40" y="858" font-size="16">Candidate B, 4 fragments</text>
+    <rect id="bar-tooling-b" x="40" y="866" width="360.0128" height="30" rx="3" fill="#3d5a73"/>
+    <text id="label-tooling-b" x="414.0128" y="887" font-size="17">257.152 s</text>
+
+    <rect x="16" y="940" width="1008" height="548" rx="14" fill="#fbf6ef"/>
+    <text x="40" y="982" font-size="22" font-weight="700">Complete-suite times</text>
+    <text x="40" y="1012" font-size="18" font-weight="700">Separate observations with different content and configuration.</text>
+    <text x="40" y="1038" font-size="18" font-weight="700">Not a controlled before/after.</text>
+    <text x="40" y="1066" font-size="16">Bar length is minutes. Narrative-only figures have no structured field.</text>
+
+    <text x="40" y="1100" font-size="16">115.41 min. Narrative-only. Not the paired benchmark.</text>
+    <rect id="bar-suite-115" x="40" y="1108" width="900.198" height="28" rx="3" fill="#8a5a20"/>
+
+    <text x="40" y="1164" font-size="16">3,399.379 s (56.66 min). Narrative-only. No same-content control.</text>
+    <rect id="bar-suite-3399" x="40" y="1172" width="441.9193" height="28" rx="3" fill="#8a5a20"/>
+
+    <text x="40" y="1228" font-size="16">Candidate A. 2038.383 s, approximately 33m58s. Two source cases failed.</text>
+    <rect id="bar-suite-a" x="40" y="1236" width="264.9898" height="28" rx="3" fill="#b42318"/>
+    <text x="52" y="1255" font-size="14" font-weight="700" fill="#ffffff">Failed</text>
+
+    <text x="40" y="1290" font-size="16">Candidate B. 1817.171 s (30m17.171s). Passed, still above the 30-minute target.</text>
+    <rect id="bar-suite-b" x="40" y="1298" width="236.2322" height="28" rx="3" fill="#1849a9"/>
+    <text x="52" y="1317" font-size="14" font-weight="700" fill="#ffffff">Passed</text>
+
+    <text x="40" y="1352" font-size="16">30-minute target. 1800 s. Candidate B is still above it.</text>
+    <rect id="bar-target" x="40" y="1360" width="234" height="28" rx="3" fill="#fbf6ef" stroke="#9b1c1c" stroke-width="2" stroke-dasharray="6 4"/>
+
+    <line id="axis-suite" x1="40" y1="1408" x2="940.198" y2="1408" stroke="#1c1c1c" stroke-width="1"/>
+    <line id="axis-zero" x1="40" y1="1402" x2="40" y2="1414" stroke="#1c1c1c" stroke-width="1"/>
+    <line id="axis-30" x1="274" y1="1400" x2="274" y2="1416" stroke="#9b1c1c" stroke-width="2"/>
+    <line id="axis-115" x1="940.198" y1="1402" x2="940.198" y2="1414" stroke="#1c1c1c" stroke-width="1"/>
+    <text x="40" y="1432" font-size="14" text-anchor="middle">0</text>
+    <text id="label-axis-30" x="274" y="1432" font-size="14" font-weight="700" fill="#9b1c1c" text-anchor="middle">30 min</text>
+    <text id="label-axis-115" x="940.198" y="1432" font-size="14" text-anchor="end">115.41 min</text>
+
+    <text x="40" y="1464" font-size="18" font-weight="700" fill="#9b1c1c">1817.171 − 1800 = 17.171 seconds, so Candidate B is still above the target.</text>
   </g>
-
-  <line x1="640" y1="560" x2="1140" y2="560" stroke="#1c1c1c" stroke-width="1"/>
-  <line x1="640" y1="554" x2="640" y2="566" stroke="#1c1c1c" stroke-width="1"/>
-  <line x1="769.97" y1="554" x2="769.97" y2="566" stroke="#1c1c1c" stroke-width="1"/>
-  <line x1="1140" y1="554" x2="1140" y2="566" stroke="#1c1c1c" stroke-width="1"/>
-  <text x="640" y="584" fill="#1c1c1c" font-family="Arial, Helvetica, sans-serif" font-size="13" text-anchor="middle">0</text>
-  <text x="769.97" y="584" fill="#1c1c1c" font-family="Arial, Helvetica, sans-serif" font-size="13" text-anchor="middle">30 min</text>
-  <text x="1140" y="584" fill="#1c1c1c" font-family="Arial, Helvetica, sans-serif" font-size="13" text-anchor="end">115.41 min</text>
-
-  <text x="32" y="640" fill="#1c1c1c" font-family="Arial, Helvetica, sans-serif" font-size="15">Points 1 and 2 are case-study narrative-only figures with no JSON field.</text>
-  <text x="32" y="664" fill="#1c1c1c" font-family="Arial, Helvetica, sans-serif" font-size="15">Points 3 and 4 are JSON-backed rounded display values.</text>
 </svg>
