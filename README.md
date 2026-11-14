@@ -34,21 +34,32 @@ files available; no harness integration, scripts or service connection is requir
 
 ### Case study numbers
 
-The chart uses rounded display values from the [anonymous case study](references/case-study.md) and [data/benchmark-runs.json](data/benchmark-runs.json).
+The chart leads with the controlled comparisons. Same content, measured before
+and after.
 
-Candidate A is `before_fixture_repair_tooling2`. Candidate B is `repaired_fixtures_tooling4`.
+The matrix subset, three pairs and six runs, has a baseline median of 104.244
+seconds and a candidate median of 50.687 seconds. The median paired reduction
+is 51.47%, about 2.06x faster (104.244 / 50.687 = 2.0566).
 
-Both record `target_met` as false against `target_seconds` 1800. Complete time is `elapsed_seconds.conservative_complete`. Tooling time is `stages_seconds.tooling`.
+CLI reads, seven pairs, improved in every pair. The median paired reduction is
+25.4%. Absolute seconds were not released, so that result is a percentage only.
 
-Candidate A records `functional_pass` as false. Candidate B records `functional_pass` as true. The runs are separate observations.
+The tooling stage is two separate single observations, not a paired
+measurement: 486.782 seconds with two fragments, and 257.152 seconds with four
+fragments.
 
-```mermaid
-xychart-beta
-    title "Complete time and tooling stage"
-    x-axis ["A complete", "B complete", "Target", "A tooling", "B tooling"]
-    y-axis "Seconds" 0 --> 2200
-    bar [2038.383, 1817.171, 1800, 486.782, 257.152]
-```
+The lower panel lists complete-suite times. Those points are separate
+observations with different content and configuration, not a controlled
+before/after.
+
+115.41 minutes is a narrative-only complete validation, with no structured
+field, and it was not the paired benchmark. 3,399.379 seconds (56.66 minutes)
+is narrative-only and had no same-content control. Candidate A took 2038.383
+seconds (approximately 33m58s) and failed two source cases. Candidate B took
+1817.171 seconds (30m17.171s), passed, and is still above the 1800-second
+target.
+
+![Paired savings above, and separate complete-suite observations below. The lower panel is not a controlled before/after. Candidate A is marked failed, and Candidate B is still above the 30-minute target.](assets/improvement-arc.svg)
 
 The [anonymous case study](references/case-study.md) and
 [sanitized measurements](data/benchmark-runs.json) are self-contained examples.
