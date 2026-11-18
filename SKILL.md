@@ -37,8 +37,9 @@ covered by [MIT](LICENSE); that license does not cover other repository content.
   suite procedure below.
 - **Test-cost investigation or suite-speed improvement:** read the
   [final checklist](references/quality-contract.md) and follow the numbered
-  [suite-optimization procedure](references/suite-optimization.md). It produces
-  an inventory, a bounded experiment and evidence appropriate to the claim.
+  [suite-optimization procedure](references/suite-optimization.md). For timing
+  inside a slow case, use the
+  [instrumentation checklist](references/suite-optimization.md#measure-a-slow-case-without-changing-what-it-exercises).
 - **Assess or explain benchmark evidence:** use the
   [anonymous case study](references/case-study.md) and
   [sanitized measurements](data/benchmark-runs.json). These are examples, not

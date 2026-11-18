@@ -87,6 +87,18 @@ redundant. Preserve every row and assertion. Break the reset and confirm the
 test detects cross-row contamination before accepting the optimization. Do not
 call two rows equivalent merely because both use the CLI.
 
+For a cache, test what gets reused and what must stay distinct. For example, a
+dependency scanner can memoize parsed imports within one scan. If relative
+imports depend on location, the key needs the path as well as the source text.
+Store immutable parsed data and keep each caller's mutable results separate.
+Use a fixture with two files containing identical relative-import text in
+different packages, then check which dependent IDs and reasons are returned.
+In a second scan, edit an import at the same path and verify the new dependency
+is discovered. In a separate scenario, use a malformed dependency to verify
+that the original error path still runs. An uncached control should fail the
+parse-count assertion. A text-only key or a stale shared cache should fail its
+respective correctness assertion. A missing import or setup failure does not count.
+
 Use a real tracked input or generate it in the fixture. An input present only in
 one author's ignored working files creates costly failures in copied trees and
 CI. Likewise, a copied test tree may intentionally lack the original Git history;
@@ -147,6 +159,14 @@ owned-root record and a before-run inventory. A new directory name, timestamp or
 empty process list does not identify its creator. Report unattributed residue as
 such, and do not make a test pass by deleting directories selected only by age or
 a familiar name pattern.
+
+For a process observer, record the child's and parent's birth identities when
+you observe the relationship. Test a reused child PID, a reused parent PID and
+an ambiguous or missing relationship with a synthetic event stream. Check that
+the expected identity can still be reconciled when an unrelated old process
+used the same PID. A sampled event's emission timestamp gives an observation
+time. It cannot establish exact exit order. Check terminal status and remaining
+owned processes separately from any snapshot taken while the wrapper is alive.
 
 ### Control time at the correct seam
 
