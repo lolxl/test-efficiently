@@ -21,8 +21,10 @@ still apply.
 
 **Output:** A baseline record naming content/dirty state, command/options,
 runtime, CPU/resource budget, worker geometry (counts, overlap and nested pools),
-terminal status and what elapsed time includes. Distinguish targeted, portable-copy,
-tooling and complete-run scopes.
+terminal status and what elapsed time includes. Distinguish targeted,
+portable-copy, tooling and complete-run scopes. Define the target clock and
+its start and end before the run. Suite elapsed and time until shared resources
+are released answer different questions.
 Use an isolated checkout. Include normal environment protections and competing
 work; record cache/thermal conditions when relevant or label them uncontrolled.
 On a shared host, use the existing coordination mechanism for probes and builds
@@ -77,13 +79,15 @@ any local edits the runner copies into its test tree.
 - Use a monotonic clock for elapsed intervals. Separate fixture preparation,
   subprocess calls, assertions and teardown. Check what the runner's case timer
   includes before comparing it with a timer around the test method.
-- Assign each interval to one total. For example, a cache probe inside
-  preparation can be reported separately as a breakdown of preparation. If
-  setup takes 5 s including a 2 s probe, and a child runs for 8 s, the two
-  enclosing intervals account for 13 s. Report any remainder and investigate
-  overlap or incompatible clocks if the remainder is negative.
-- Record which path actually executed, including cache hits, refused probes and
-  early exits. Reuse existing observations where possible. Keep exception and
+- Report nested intervals as breakdowns of their enclosing phase. If setup
+  takes 5 s including a 2 s probe, and a child then runs for 8 s, the enclosing
+  phases cover 13 s. For overlapping phases, use the union of their intervals
+  on the same clock. Setup at 0–5 s and a child at 2–10 s cover 10 s of elapsed
+  time. Subtract covered time only from a total with the same clock and
+  boundary. Report the remainder separately and check for boundary mismatches
+  before attributing it to any particular work.
+- Record which path actually executed, including cache hits, probes that
+  decline to enable a cache, and early exits. Reuse existing observations where possible. Keep exception and
   cancellation behavior intact, and use the runner's supported output channel
   so instrumentation stays within the fixture's write boundary.
 - For initial diagnosis, bracket one instrumented run with unchanged baseline
@@ -105,24 +109,28 @@ for clocks, subprocess boundaries or guard sensitivity.
   leaves; a filename exclusion can silently lose future tests. Before replacing
   two full fixture runs with one, check that the distinguishing setup does not
   affect the shared assertions. For example, if a driver clears an inherited
-  setting before running any checks, one invocation with that setting may also
-  cover the ordinary case. Compare observable behavior and verify the fixture's
-  protected state before and after.
-  Break that protection and confirm the relevant assertion fails.
+  setting before anything reads it, one full run with the setting present may
+  cover the shared assertions. Keep a focused check for startup with the
+  setting absent. When the setting is present, verify that the state it could
+  redirect stays unchanged. Disable the clearing step and check that the
+  relevant assertion fails.
 - **Preparation/cache:** Measure preparation separately. Key immutable reusable
   input by real content/configuration; preserve each case's mutable state and
   reset contract. Use independent controls for stale, changed and foreign input.
-  For a cache benchmark, hold the workload and inputs fixed. Verify both versions
-  reach the same selection path, and compare IDs, reasons and error behavior.
-  An edit to the selector itself can trigger a full fallback before the parser is
-  reached, making a fast result irrelevant to the cache.
+  For a change-based test selector, run both versions against the same fixture
+  tree and changed paths, using the runner's input seam if it has one. Keep the
+  selector implementation edit outside that input. Otherwise the edit can
+  trigger full selection before the parser is reached. Verify both versions
+  reach the intended path and compare IDs, reasons and error behavior.
 - **Weights/shards:** Account for class/module fixture re-entry and ordering.
   Build the inventory from the current runner and verify that shard assignments
   form a disjoint, complete union of executable entries. Record which weights
   are observed, stale or defaults. Keep the runtime of an executed entry that
-  eventually reports SKIP. Label the fallback for an unmeasured entry as a
-  default. Replay weights to identify a predicted long shard, then measure the
-  slowest actual shard. Case-only costs can omit fixture setup and contention.
+  eventually reports SKIP. Retain a conservative default for unmeasured costs
+  and label it explicitly. Moving cases can repeat fixture setup or break
+  fixture affinity even when the IDs stay the same. Replay weights to identify
+  a predicted long shard, then measure the slowest actual shard. Case-only
+  estimates can omit setup and contention.
 - **Concurrency/ownership:** Enumerate shared writers and nested pools; define
   resource limits and keep isolation active. Keep outer admission active too.
   Outer admission is the project's existing permission and resource check
@@ -167,11 +175,13 @@ zero. A correct grand total cannot repair a duplicate identity or an omitted cas
 
 If the candidate or its base changes, retain the old result under its old content
 identity. Choose new validation from the actual combined change and project
-policy. If several changes share a validation run, test the integrated tree and
-check the landed tree against it. Separate passing branches can still interact
-through the runner, discovery, configuration or fixtures even without a shared
-changed file. An unrelated editorial edit alone is not a reason to repeat a
-complete run.
+policy. Targeted evidence remains limited to its tested cohort. If several
+changes share a validation run, test the integrated tree and verify the landed
+content matches, for example by comparing Git tree hashes. If the trees
+differ, choose verification based on the actual difference and project policy.
+Separate passing branches can still interact through runner configuration,
+discovery or fixtures even without a shared changed file. An unrelated
+editorial edit alone is not a reason to repeat a complete run.
 
 ### Preserve useful evidence before releasing scratch
 
@@ -196,10 +206,10 @@ a successful observer or successful service restoration is not a passing suite.
 Use the [process and cleanup controls](test-design.md#test-cancellation-and-cleanup-as-observable-behavior)
 when changing those lifecycle paths. Keep retained evidence and unattributed
 residue distinct, and preserve the failed attempt before considering another run.
-Confirm terminal receipts and service restoration, where applicable, before
-counting shared resources as released. Metadata changes near a scheduled job
-suggest where to look. Attribute them only when evidence binds the writer to the
-change, or report the writer as unknown.
+Confirm recorded exit statuses and service restoration, where applicable,
+before counting shared resources as released. File metadata changes near a
+scheduled job suggest where to look. Attribute them only when evidence binds
+the writer to the change, or report the writer as unknown.
 
 For a local comparison, interleave baseline and candidate runs and record the
 pair count, the distribution, the measured boundary and the controlled
@@ -208,13 +218,13 @@ conditions. Apply the Claim item in the
 
 **Decision:** A failed/interrupted run is evidence to investigate and retain.
 If the complete run passes but exceeds the target, correctness passed and the
-performance target was missed. Define the target clock before the run. Suite
-elapsed, launcher elapsed and time through resource release answer different
-questions. If one required clock is missing, report the gap. An interval
-inside the target boundary that already exceeds the budget establishes a miss.
-Select further work from the measured critical path. An unchanged retry needs a
-named reason. If local paired results are mixed, return to step 3 or stop and record the
-rejected proposal.
+performance target was missed. If a required start or end time is missing,
+report the gap. A single contiguous interval on the target clock, entirely
+within the target boundary, establishes a miss if it already exceeds the
+budget. Summed worker time cannot establish that a wall-clock budget was
+exceeded. Select further work from the measured critical path. An unchanged
+retry needs a named reason. If local paired results are mixed, return to step 3
+or stop and record the rejected proposal.
 
 ## 6. Report the result at the supported scope
 

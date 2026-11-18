@@ -87,17 +87,26 @@ redundant. Preserve every row and assertion. Break the reset and confirm the
 test detects cross-row contamination before accepting the optimization. Do not
 call two rows equivalent merely because both use the CLI.
 
-For a cache, test what gets reused and what must stay distinct. For example, a
-dependency scanner can memoize parsed imports within one scan. If relative
-imports depend on location, the key needs the path as well as the source text.
-Store immutable parsed data and keep each caller's mutable results separate.
-Use a fixture with two files containing identical relative-import text in
-different packages, then check which dependent IDs and reasons are returned.
-In a second scan, edit an import at the same path and verify the new dependency
-is discovered. In a separate scenario, use a malformed dependency to verify
-that the original error path still runs. An uncached control should fail the
-parse-count assertion. A text-only key or a stale shared cache should fail its
-respective correctness assertion. A missing import or setup failure does not count.
+Test cache reuse separately from correctness. For a dependency scanner, use
+these controls where they match the cache's contract.
+
+- **Reuse within one scan.** Arrange for two dependents to request the same
+  file and content through the normal lookup path. Expect one underlying parse.
+  Disabling the cache should produce two parses and fail that assertion.
+- **Context and result isolation.** Use identical relative-import text in two
+  packages that resolve to different dependencies. Assert the exact affected
+  IDs and reasons for each package. A cache of resolved dependencies needs
+  the resolution context in its key. A syntax-only cache can key on text
+  when parser settings are fixed and each caller resolves names in its own
+  context. If callers receive mutable results, mutate one and check that
+  the next lookup is unchanged.
+- **Lifetime and errors.** Run two scans in the same process. For a cache scoped
+  to one scan, repeat with unchanged inputs and verify a fresh parse. Then
+  edit an import at the same path and verify the new dependency is found.
+  Use malformed input separately to check the original error path.
+
+A control should fail at its named assertion. Check that a parse-count drop
+comes from reusing the same input rather than aliasing different dependencies.
 
 Use a real tracked input or generate it in the fixture. An input present only in
 one author's ignored working files creates costly failures in copied trees and
@@ -160,13 +169,15 @@ empty process list does not identify its creator. Report unattributed residue as
 such, and do not make a test pass by deleting directories selected only by age or
 a familiar name pattern.
 
-For a process observer, record the child's and parent's birth identities when
-you observe the relationship. Test a reused child PID, a reused parent PID and
-an ambiguous or missing relationship with a synthetic event stream. Check that
-the expected identity can still be reconciled when an unrelated old process
-used the same PID. A sampled event's emission timestamp gives an observation
-time. It cannot establish exact exit order. Check terminal status and remaining
-owned processes separately from any snapshot taken while the wrapper is alive.
+For a process observer, record the child's and parent's birth identities in
+the observation that establishes the relationship. Use a synthetic event stream
+to check that reused child and parent PIDs are matched to the right birth
+identities. An ambiguous or missing relationship should stay unknown. When
+changing the collector, use a controlled live parent and child to verify that
+the collector captures those identities and their relationship together.
+A sampled event's emission time can lag the event. Check recorded exit status
+and remaining owned processes separately from any snapshot taken while the
+wrapper is alive.
 
 ### Control time at the correct seam
 
