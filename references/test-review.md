@@ -32,6 +32,28 @@ but already overwrite a file; another API can encode refusal in a result field
 while returning a successful process status. Confirm the relevant branch was
 reached rather than passing because of an earlier unrelated refusal.
 
+## Assess necessity, design and sharing separately
+
+- **Independent value:** Which supported behavior or distinct failure becomes
+  unobserved if this case goes away? Name the surviving test if the observation
+  already has coverage. Keep the case while equivalence or intent is unresolved.
+- **Design cost:** Does the fixture, layer or repeated execution earn its cost
+  through a boundary the assertion needs? A test can protect a real behavior
+  and still spend most of its time on unnecessary setup. Check whether an
+  assertion examines the product result, a useful fixture precondition or only
+  a value the test supplied itself.
+- **Sharing opportunity:** Can cases share inputs, an assertion helper or setup?
+  Preserve distinct inputs and per-case mutable state. Combining two calls is
+  a separate decision from sharing the code that prepares them.
+
+For a broad audit, pin the inventory before judging it. Reconcile one
+disposition for each case ID and record nested inputs where they affect the
+decision. Keep executable entries, cases, subtests and fixture outcomes
+distinct. A parent can represent a whole input table, including rows with
+different failure paths. A report with subtest ordinals gives the count and
+outcomes it recorded. Use the generator or labeled inputs to establish which
+variants those observations represent and mark any unresolved correspondence.
+
 ## Choose a disposition from evidence
 
 | Decision | Evidence needed |
@@ -49,6 +71,33 @@ into the table does not automatically replace the caller's side-effect checks.
 There is no universal number of integration tests to keep; choose representatives
 for the distinct boundary paths that remain and disclose combinations no longer
 executed through the complete entry.
+
+### Prove equivalence before combining executions
+
+Compare the resolved callable and fixture lifecycle, including inherited setup,
+cleanup, helper overrides, skips, parameters, environment and execution context.
+For commands, include initial state, arguments, preceding actions and caller.
+The same method source can observe different behavior in subclasses with
+different configuration. Removing inherited repeats should preserve the original
+parent tests, subclass-specific tests, and relevant setup and cleanup ordering.
+
+Look first for work that can be saved while keeping the check close to the same
+boundary:
+
+- **Duplicate input rows:** Compare input, mode and expected outcome before
+  dropping a row. Preserve meaningful input types and order when normalizing.
+  Reconcile the retained matrix with any fixture or expected-data table.
+- **One call with several observations:** If two tests start from the same
+  state and make the same call, use one result to check both observations.
+  Keep useful failure messages. For sequences that write to a shared log or
+  store, assert the change attributable to each call.
+- **Redundant assertions:** An equality check on the complete result can
+  already cover some individual field or absence assertions. Retain any
+  separate contract such as key order or a side effect outside the result.
+- **Shared preparation:** Reuse immutable inputs or helpers. Keep a fresh
+  mutable fixture per case unless its reset restores every state item the
+  tests observe. Preserve repeated calls that establish reset, determinism,
+  idempotence or accumulation across calls.
 
 For a timing-sensitive test, distinguish the required latency boundary from
 incidental preparation or unrelated pipeline work. Do not silently raise a
@@ -85,6 +134,8 @@ the destination is opened. The status of an old compatibility option is unstated
 
 | Existing case | Observation and gap | Proposed disposition | Relevant falsifier |
 |---|---|---|---|
+| Two tests run the same invalid export against identical pre-existing destinations | One checks the status and the other checks that the destination stayed unchanged. | Check both results after one invocation from a fresh fixture. | A correct error status with altered destination bytes must still fail. |
+| Two suites inherit the same export test with different format defaults | Each fixture selects a different writer even though the test body is identical. | Share fixture construction and retain both writer checks. | Breaking either default writer must fail its own case. |
 | Several supported/rejected format rows each start the whole CLI | Format selection is a decision; the CLI also wires parsing to the writer. | Move the decision rows to the parser seam; retain real entry coverage for writing and refusal ordering. | A relevant wrong format decision must fail the table; caller-order errors must fail the real entry check. |
 | Unsupported format returns an error | Status alone cannot show whether an existing destination was already changed. | Keep a real refusal-path check and assert pre-existing destination bytes stay unchanged. | Opening/truncating the destination before rejecting the format must fail, even with the expected error status. |
 | CLI format equals the file's configured format | The same output cannot establish which source won. | Use different valid formats and check the selected output through the actual configuration boundary. | Ignoring the CLI override must fail the distinct-value positive control. |
@@ -101,6 +152,22 @@ For a meaningful behavior or guard change, show the valid path passing and a
 relevant bad version failing for the intended reason. If a boundary moves,
 check its actual caller and side effects; do not validate only an isolated mock.
 An editorial worksheet change does not itself require artificial mutations.
+
+For a removal, record the original ID, its named replacement and the observation
+it preserves. Check that the replacement is actually selected and executes in
+each supported selector and context that matters to the removed case. For
+example, a full suite can pass while a changed-file selection loses its only
+exporter test. Compare real discovery and focused selection where available,
+and record any retired explicit ID. If the runner has no such selector, the
+ordinary entry point may provide all the selection evidence needed.
+
+Where equivalent failure sensitivity matters, derive a control from the removed
+case's concrete contract. The original case and its replacement should catch
+the same bad behavior at the intended observation. For example, both should
+fail if an exporter leaves a partial file after refusal, even when its exit code
+is correct. A shared error earlier in the call provides no evidence about that
+file. Reuse an existing control when it exercises the same failure in the
+relevant context.
 
 Keep replacement sensitivity, required context coverage and the ID/skip/outcome
 reconciliation explicit. Follow project-required complete validation after the
